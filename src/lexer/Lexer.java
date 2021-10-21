@@ -74,6 +74,18 @@ public class Lexer {
           token = Symbol.IN;
           tokenPos += 2;
         }
+        //print
+        else if(ch == 'p' && tokenPos + 4 < input.length && input[tokenPos+1] == 'r' && input[tokenPos+2] == 'i' && input[tokenPos+3] == 'n'
+                && input[tokenPos+4] == 't'){
+          token = Symbol.PRINT;
+          tokenPos += 5;
+        }
+        //println
+        else if(ch == 'p' && tokenPos + 6 < input.length && input[tokenPos+1] == 'r' && input[tokenPos+2] == 'i' && input[tokenPos+3] == 'n'
+                && input[tokenPos+4] == 't' && input[tokenPos+5] == 'l' && input[tokenPos+6] == 't'){
+          token = Symbol.PRINTLN;
+          tokenPos += 7;
+        }
         //while
         else if(ch == 'w' && tokenPos + 4 < input.length && input[tokenPos+1] == 'h' && input[tokenPos+2] == 'i'
                 && input[tokenPos+3] == 'l' && input[tokenPos+4] == 'e'){
@@ -126,6 +138,14 @@ public class Lexer {
         switch (ch) {
           case ';':
             token = Symbol.SEMICOLON;
+            tokenPos++;
+            break;
+          case ')':
+            token = Symbol.RIGHTPAR;
+            tokenPos++;
+            break;
+          case '(':
+            token = Symbol.LEFTPAR;
             tokenPos++;
             break;
           case '+':

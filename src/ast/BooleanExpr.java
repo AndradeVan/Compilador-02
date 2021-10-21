@@ -1,5 +1,7 @@
 package ast;
 
+import java.io.PrintWriter;
+
 public class BooleanExpr extends Expr{
 
   private boolean value;
@@ -13,6 +15,11 @@ public class BooleanExpr extends Expr{
   @Override
   public Type getType() {
     return Type.booleanType;
+  }
+
+  @Override
+  public void genC(PrintWriter pw) {
+    pw.print( value ? "1" : "0" );
   }
 
 

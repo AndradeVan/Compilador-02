@@ -1,61 +1,94 @@
 package main;
 
-import ast.Type;
-import ast.Variable;
+import ast.*;
 import lexer.Lexer;
 import lexer.Symbol;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 public class Compiler {
 
   private Lexer lexer;
   private Hashtable<String, Variable> symbolTable;
 
-  public void compile( char []input){
+  public Program compile(char []input){
     lexer = new Lexer(input);
     symbolTable = new Hashtable<>();
     lexer.nextToken();
 
-    program();
+    Program program = program();
+
+    return program;
 
   }
 
-  private void program() {
+  private Program program() {
+
+    List<Stat> statList = new ArrayList<>();
+    //não sei se precisa, não tem como eu receber o valor da variavel agr
+    ArrayList<VarListStat> arrayVariable = null;
 
     while(lexer.token == Symbol.VAR || lexer.token == Symbol.IDENT || lexer.token ==  Symbol.IF || lexer.token == Symbol.FOR
-    || lexer.token == Symbol.WHILE) {
-      stat();
+    || lexer.token == Symbol.WHILE || lexer.token == Symbol.PRINT || lexer.token == Symbol.PRINTLN) {
+      statList.add(stat());
+
     }
+    return new Program(statList);
   }
 
-  private void stat() {
+  private Stat stat() {
     switch (lexer.token) {
       case VAR:
-        varList();
-        break;
+        return varList();
       case IDENT:
-        assignStat();
-        break;
+        return assignStat();
       case IF:
-        ifStat();
-        break;
+        return ifStat();
       case FOR:
-        forStat();
-        break;
+        return forStat();
       case WHILE:
-        whileStat();
-        break;
+        return whileStat();
+      case PRINT:
+        return printStat();
+      case PRINTLN:
+        return printlnStat();
     }
+    return null;
   }
 
-  private void whileStat() {
+  private PrintStat printStat() {
     lexer.nextToken();
-    expr();
-    statList();
+    Expr e = expr();
+    if(lexer.token != Symbol.SEMICOLON){
+      System.out.println("Esqueceu ;");
+    }
+    lexer.nextToken();
+
+    return new PrintStat(e);
   }
 
-  private void forStat() {
+  private PrintlnStat printlnStat() {
+    lexer.nextToken();
+    Expr e = expr();
+    if(lexer.token != Symbol.SEMICOLON){
+      System.out.println("Esqueceu ;");
+    }
+    lexer.nextToken();
+
+    return new PrintlnStat(e);
+  }
+
+  private WhileStat whileStat() {
+    lexer.nextToken();
+    Expr e = expr();
+    StatList statList = statList();
+
+    return new WhileStat(e, statList);
+  }
+
+  private ForStat forStat() {
     int first, second;
     lexer.nextToken();
     if(lexer.token == Symbol.IDENT) {
@@ -75,13 +108,13 @@ public class Compiler {
         System.out.println("Esperando in");
       }
       lexer.nextToken();
-      expr();
+      Expr startExpr = expr();
       first = lexer.getValueNumber();
       if(lexer.token != Symbol.TWODOT) {
         System.out.println("Esperando ..");
       }
       lexer.nextToken();
-      expr();
+      Expr endExpr = expr();
       second = lexer.getValueNumber();
 
       //isso tá errado, pq podemos declarar uma variavel a = 1 e usar a variavel e nao o numero
@@ -90,26 +123,34 @@ public class Compiler {
         System.out.println("Erro de execução");
         System.exit(0);
       }
-      statList();
+      StatList statList = statList();
       //remover a variavel do escopo do for
       symbolTable.remove(ident, v);
+      return new ForStat(ident, startExpr, endExpr, statList );
+    }else {
+      return null;
     }
   }
 
-  private void ifStat() {
+  private IfStat ifStat() {
     lexer.nextToken();
     //verificar se a expressao é boolean
 
-    expr();
-    statList();
+    Expr e = expr();
+    StatList ifPart = statList();
+    StatList elsePart = null;
     if(lexer.token == Symbol.ELSE){
       //System.out.println("Esperando Else");
       lexer.nextToken();
+      elsePart = statList();
     }
-    lexer.nextToken();
+
+    return new IfStat(e, ifPart, elsePart);
   }
 
-  private void statList() {
+  private StatList statList() {
+    StatList statList = new StatList();
+
     if(lexer.token != Symbol.OPENCHAVE){
       System.out.println("Esperando {");
     }
@@ -118,16 +159,18 @@ public class Compiler {
     //{ stat }
     while (lexer.token == Symbol.VAR || lexer.token == Symbol.IDENT || lexer.token == Symbol.FOR || lexer.token == Symbol.IF ||
             lexer.token == Symbol.WHILE || lexer.token == Symbol.PRINTLN || lexer.token == Symbol.PRINT) {
-      stat();
+      statList.add(stat());
     }
 
     if(lexer.token != Symbol.CLOSECHAVE) {
       System.out.println("Esperando }");
     }
     lexer.nextToken();
+
+    return statList;
   }
 
-  private void assignStat() {
+  private AssignStat assignStat() {
 
     String name = lexer.getStringValue();
 
@@ -143,73 +186,94 @@ public class Compiler {
       System.out.println("Faltando =");
     }
     lexer.nextToken();
-    expr();
+    Expr e = expr();
     if(lexer.token != Symbol.SEMICOLON) {
       System.out.println("Faltando ;");
     }
     lexer.nextToken();
+    return new AssignStat(name, e);
   }
 
-  private void expr() {
-    orExpr();
+  private Expr expr() {
+    Expr left, right;
+    left = orExpr();
     while(lexer.token == Symbol.PLUSPLUS) {
       lexer.nextToken();
-      orExpr();
+      right = orExpr();
+      left = new CompositeExpr(left, Symbol.PLUSPLUS, right);
     }
+    return left;
   }
 
-  private void orExpr() {
-    andExpr();
+  private Expr orExpr() {
+    Expr left, right;
+
+    left = andExpr();
     if (lexer.token == Symbol.OR) {
       lexer.nextToken();
-      andExpr();
+      right = andExpr();
+      left = new CompositeExpr(left, Symbol.OR, right);
     }
+    return left;
   }
 
-  private void andExpr() {
-    relExpr();
+  private Expr andExpr() {
+    Expr left, right;
+    left = relExpr();
     if(lexer.token == Symbol.AND){
       lexer.nextToken();
-      relExpr();
+      right = relExpr();
+      left = new CompositeExpr(left, Symbol.AND, right);
     }
+    return left;
   }
 
-  private void relExpr() {
-    addExpr();
+  private Expr relExpr() {
+    Expr left, right;
+
+    left = addExpr();
     Symbol op = lexer.token;
     if(op == Symbol.LT || op == Symbol.LE || op == Symbol.GE || op == Symbol.GT ||
             op == Symbol.EQ || op == Symbol.NEQ) {
       lexer.nextToken();
-      addExpr();
+      right = addExpr();
+      left = new CompositeExpr(left, op, right);
     }
+
+    return left;
   }
 
-  private void addExpr() {
-    multExpr();
+  private Expr addExpr() {
+    Expr left, right;
+    left = multExpr();
     Symbol op;
     while((op = lexer.token) == Symbol.PLUS || op == Symbol.MINUS) {
       lexer.nextToken();
-      multExpr();
+      right = multExpr();
+      left = new CompositeExpr(left, op, right);
     }
+    return left;
   }
 
-  private void multExpr() {
-    simpleExpr();
+  private Expr multExpr() {
+    Expr left, right;
+    left = simpleExpr();
     Symbol op;
     while((op = lexer.token) == Symbol.MULT || op == Symbol.DIV || op == Symbol.REMAINDER) {
       lexer.nextToken();
-      simpleExpr();
+      right = simpleExpr();
+      left = new CompositeExpr(left, op, right);
     }
+    return left;
   }
 
-  private void simpleExpr() {
+  private Expr simpleExpr() {
     switch(lexer.token) {
       case Boolean:
         lexer.nextToken();
         break;
       case NUMBER:
-        lexer.nextToken();
-        break;
+        return number();
       case TRUE:
         lexer.nextToken();
         break;
@@ -232,6 +296,14 @@ public class Compiler {
         lexer.nextToken();
         expr();
         break;
+      case LEFTPAR:
+        lexer.nextToken();
+        expr();
+        if(lexer.token == Symbol.RIGHTPAR){
+          lexer.nextToken();
+        }else
+          System.out.println("Erro faltando )");
+        break;
       default:
         if(lexer.token != Symbol.IDENT){
           System.out.println("Erro");
@@ -245,12 +317,17 @@ public class Compiler {
           System.out.println("Variavel " + name + " não foi declarada.");
         }
         lexer.nextToken();
+
+        return new VariableExpr(v);
     }
+    return null;
   }
 
-  private void varList() {
+  private VarListStat varList() {
+
     lexer.nextToken();
-    type();
+    Type type = type();
+    //colocar um caracter aqui ?
     if(lexer.token != Symbol.IDENT) {
       System.out.println("Erro ao criar uma variavel");
     }
@@ -269,6 +346,8 @@ public class Compiler {
       System.out.println("Faltando ;");
     }
     lexer.nextToken();
+
+    return new VarListStat(type, name);
   }
 
   private Type type() {
@@ -276,16 +355,26 @@ public class Compiler {
     switch(lexer.token) {
       case Boolean:
         result = Type.booleanType;
-        System.out.println("Boolean");
         break;
       case Int:
         result = Type.intType;
-        System.out.println("Int");
+        break;
+      case String:
+        result = Type.stringType;
         break;
       default:
-        throw new IllegalStateException("Unexpected value: " + lexer.token);
+        throw new IllegalStateException("Compilador não suporta o tipo: " + lexer.token);
     }
     lexer.nextToken();
+    System.out.println("Valor do tipo " + result);
     return result;
+  }
+
+  private NumberExpr number() {
+
+    int value = lexer.getValueNumber();
+    lexer.nextToken();
+
+    return new NumberExpr(value);
   }
 }
