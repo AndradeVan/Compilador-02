@@ -14,6 +14,9 @@ abstract public class Type {
   public static Type intType = new IntType();
   public static Type stringType = new StringType();
 
+  public String getName() {
+    return name;
+  }
   public abstract void genC(PrintWriter pw);
 
 }

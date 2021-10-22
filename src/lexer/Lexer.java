@@ -6,6 +6,7 @@ public class Lexer {
   private int tokenPos;
   public Symbol token;
   private String stringValue;
+  private String stringIdent;
   private int valueNumber;
 
 
@@ -114,7 +115,7 @@ public class Lexer {
         else if(ch == 'f' && tokenPos + 4 < input.length && input[tokenPos+1] == 'a' && input[tokenPos+2] == 'l'
                 && input[tokenPos+3] == 's' && input[tokenPos+4] == 'e'){
           token = Symbol.FALSE;
-          tokenPos += 4;
+          tokenPos += 5;
         }
         else {
           StringBuffer ident = new StringBuffer();
@@ -234,12 +235,18 @@ public class Lexer {
               token = Symbol.GT;
             tokenPos++;
             break;
+          //TODO - trocar para aspas duplas '\"'
           case '\'':
+            StringBuffer ident = new StringBuffer();
             token = Symbol.CHARACTER;
             tokenPos++;
-            /*if ( input[tokenPos] != '\'' )
-              System.out.println(input[tokenPos-1] );
-            tokenPos++;*/
+            while(input[tokenPos] != '\''){
+              ident.append(input[tokenPos]);
+              tokenPos++;
+            }
+            stringIdent = ident.toString();
+            System.out.println(stringIdent);
+            tokenPos++;
             break;
           default:
             System.out.println("Caracter invalido: " + ch);
@@ -251,6 +258,11 @@ public class Lexer {
   public String getStringValue() {
     return stringValue;
   }
+
+  public String getStringIdent() {
+    return stringIdent;
+  }
+
   public int getValueNumber() {
     return valueNumber;
   }

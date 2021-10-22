@@ -137,6 +137,7 @@ public class Compiler {
     //verificar se a expressao é boolean
 
     Expr e = expr();
+
     StatList ifPart = statList();
     StatList elsePart = null;
     if(lexer.token == Symbol.ELSE){
@@ -174,8 +175,6 @@ public class Compiler {
 
     String name = lexer.getStringValue();
 
-    //verificar se isso ta certo !?
-    //Verificar se a variavel não foi declarada
     Variable v = symbolTable.get(name);
     if(v == null) {
       System.out.println("Variavel " + name + " não foi declarada.");
@@ -186,7 +185,9 @@ public class Compiler {
       System.out.println("Faltando =");
     }
     lexer.nextToken();
+
     Expr e = expr();
+
     if(lexer.token != Symbol.SEMICOLON) {
       System.out.println("Faltando ;");
     }
@@ -268,42 +269,47 @@ public class Compiler {
   }
 
   private Expr simpleExpr() {
+    Expr e;
     switch(lexer.token) {
       case Boolean:
         lexer.nextToken();
         break;
+      case CHARACTER:
+        String value = lexer.getStringIdent();
+        lexer.nextToken();
+        return new StringExpr(value);
       case NUMBER:
         return number();
       case TRUE:
         lexer.nextToken();
-        break;
+        return BooleanExpr.True;
       case FALSE:
         lexer.nextToken();
-        break;
+        return BooleanExpr.False;
       case NOT:
         lexer.nextToken();
-        expr();
-        break;
+        e = expr();
+        return new UnaryExpr(e, Symbol.NOT);
       case PLUS:
         lexer.nextToken();
-        expr();
-        break;
+        e = expr();
+        return new UnaryExpr(e, Symbol.PLUS);
       case MINUS:
         lexer.nextToken();
-        expr();
-        break;
+        e = expr();
+        return new UnaryExpr(e, Symbol.MINUS);
       case PLUSPLUS:
         lexer.nextToken();
-        expr();
-        break;
+        e = expr();
+        return new UnaryExpr(e, Symbol.PLUSPLUS);
       case LEFTPAR:
         lexer.nextToken();
-        expr();
-        if(lexer.token == Symbol.RIGHTPAR){
-          lexer.nextToken();
-        }else
+        e = expr();
+        if(lexer.token != Symbol.RIGHTPAR){
           System.out.println("Erro faltando )");
-        break;
+        }
+        lexer.nextToken();
+        return e;
       default:
         if(lexer.token != Symbol.IDENT){
           System.out.println("Erro");
