@@ -27,8 +27,9 @@ public class Compiler {
   private Program program() {
 
     List<Stat> statList = new ArrayList<>();
-    //não sei se precisa, não tem como eu receber o valor da variavel agr
     ArrayList<VarListStat> arrayVariable = null;
+
+    statList.add(stat());
 
     while(lexer.token == Symbol.VAR || lexer.token == Symbol.IDENT || lexer.token ==  Symbol.IF || lexer.token == Symbol.FOR
     || lexer.token == Symbol.WHILE || lexer.token == Symbol.PRINT || lexer.token == Symbol.PRINTLN) {
@@ -99,7 +100,7 @@ public class Compiler {
         System.out.println("Variavel " + ident + " já foi declarada.");
       }
 
-      Variable v = new Variable(ident);
+      Variable v = new Variable(ident,Type.intType);
       symbolTable.put(ident,v);
 
       lexer.nextToken();
@@ -155,6 +156,7 @@ public class Compiler {
     if(lexer.token != Symbol.OPENCHAVE){
       System.out.println("Esperando {");
     }
+
     lexer.nextToken();
 
     //{ stat }
@@ -163,9 +165,6 @@ public class Compiler {
       statList.add(stat());
     }
 
-    if(lexer.token != Symbol.CLOSECHAVE) {
-      System.out.println("Esperando }");
-    }
     lexer.nextToken();
 
     return statList;
@@ -191,6 +190,11 @@ public class Compiler {
     if(lexer.token != Symbol.SEMICOLON) {
       System.out.println("Faltando ;");
     }
+
+    if(v.getType() != e.getType()){
+      System.out.println("A variavel "+ name + " é do tipo "+ v.getType());
+    }
+
     lexer.nextToken();
     return new AssignStat(name, e);
   }
@@ -213,6 +217,9 @@ public class Compiler {
     if (lexer.token == Symbol.OR) {
       lexer.nextToken();
       right = andExpr();
+      if( left.getType() != Type.booleanType || right.getType() != Type.booleanType){
+        System.out.println("Opaa.... ! tem que ser com operador boolean");
+      }
       left = new CompositeExpr(left, Symbol.OR, right);
     }
     return left;
@@ -224,6 +231,9 @@ public class Compiler {
     if(lexer.token == Symbol.AND){
       lexer.nextToken();
       right = relExpr();
+      if( left.getType() != Type.booleanType || right.getType() != Type.booleanType){
+        System.out.println("Os valores da operação "+ Symbol.AND + " tem que ser do tipo Boolean." );
+      }
       left = new CompositeExpr(left, Symbol.AND, right);
     }
     return left;
@@ -238,6 +248,9 @@ public class Compiler {
             op == Symbol.EQ || op == Symbol.NEQ) {
       lexer.nextToken();
       right = addExpr();
+      if( left.getType() != right.getType()){
+        System.out.println("Os valores da operação "+ op + " tem que ser do mesmo tipo");
+      }
       left = new CompositeExpr(left, op, right);
     }
 
@@ -251,6 +264,9 @@ public class Compiler {
     while((op = lexer.token) == Symbol.PLUS || op == Symbol.MINUS) {
       lexer.nextToken();
       right = multExpr();
+      if( left.getType() != Type.intType || right.getType() != Type.intType){
+        System.out.println("Opaa.... ! tem que ser com operador inteiroo");
+      }
       left = new CompositeExpr(left, op, right);
     }
     return left;
@@ -263,6 +279,9 @@ public class Compiler {
     while((op = lexer.token) == Symbol.MULT || op == Symbol.DIV || op == Symbol.REMAINDER) {
       lexer.nextToken();
       right = simpleExpr();
+      if( left.getType() != Type.intType || right.getType() != Type.intType){
+        System.out.println("Opaa.... ! tem que ser com operador inteiro");
+      }
       left = new CompositeExpr(left, op, right);
     }
     return left;
@@ -271,9 +290,6 @@ public class Compiler {
   private Expr simpleExpr() {
     Expr e;
     switch(lexer.token) {
-      case Boolean:
-        lexer.nextToken();
-        break;
       case CHARACTER:
         String value = lexer.getStringIdent();
         lexer.nextToken();
@@ -289,14 +305,23 @@ public class Compiler {
       case NOT:
         lexer.nextToken();
         e = expr();
+        if(e.getType() != Type.booleanType){
+          System.out.println("Opaa.... ! tem que ser com operador boolean");
+        }
         return new UnaryExpr(e, Symbol.NOT);
       case PLUS:
         lexer.nextToken();
         e = expr();
+        if( e.getType() != Type.intType){
+          System.out.println("Opaa.... ! tem que ser com operador inteiro");
+        }
         return new UnaryExpr(e, Symbol.PLUS);
       case MINUS:
         lexer.nextToken();
         e = expr();
+        if( e.getType() != Type.intType){
+          System.out.println("Opaa.... ! tem que ser com operador inteiro");
+        }
         return new UnaryExpr(e, Symbol.MINUS);
       case PLUSPLUS:
         lexer.nextToken();
@@ -326,14 +351,13 @@ public class Compiler {
 
         return new VariableExpr(v);
     }
-    return null;
   }
 
   private VarListStat varList() {
 
     lexer.nextToken();
     Type type = type();
-    //colocar um caracter aqui ?
+
     if(lexer.token != Symbol.IDENT) {
       System.out.println("Erro ao criar uma variavel");
     }
@@ -344,7 +368,7 @@ public class Compiler {
       System.out.println("Variavel "+ name + " já foi declarada.");
     }
 
-    Variable v = new Variable(name);
+    Variable v = new Variable(name, type);
     symbolTable.put(name,v);
 
     lexer.nextToken();
@@ -372,7 +396,6 @@ public class Compiler {
         throw new IllegalStateException("Compilador não suporta o tipo: " + lexer.token);
     }
     lexer.nextToken();
-    System.out.println("Valor do tipo " + result);
     return result;
   }
 

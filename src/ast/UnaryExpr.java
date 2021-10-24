@@ -15,7 +15,7 @@ public class UnaryExpr extends Expr{
 
   @Override
   public Type getType() {
-    return null;
+    return expr.getType();
   }
 
   @Override

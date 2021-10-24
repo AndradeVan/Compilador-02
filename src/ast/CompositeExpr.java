@@ -17,7 +17,13 @@ public class CompositeExpr extends Expr{
 
   @Override
   public Type getType() {
-    return null;
+    //verificar os tipos aqui
+    if ( op == Symbol.EQ || op == Symbol.NEQ || op == Symbol.LE || op == Symbol.LT ||
+            op == Symbol.GE || op == Symbol.GT ||
+            op == Symbol.AND || op == Symbol.OR )
+      return Type.booleanType;
+    else
+      return Type.intType;
   }
 
   @Override

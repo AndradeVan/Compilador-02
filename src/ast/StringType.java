@@ -9,6 +9,6 @@ public class StringType extends Type {
 
   @Override
   public void genC(PrintWriter pw) {
-    pw.print("char");
+    pw.print("char *");
   }
 }

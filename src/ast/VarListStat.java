@@ -15,7 +15,7 @@ public class VarListStat extends Stat{
   @Override
   public void genC(PrintWriter pw) {
     type.genC(pw);
-    pw.print(" " + ident);
+    pw.print(ident);
     pw.println(";");
   }
 }

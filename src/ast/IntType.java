@@ -9,6 +9,6 @@ public class IntType extends Type {
 
   @Override
   public void genC(PrintWriter pw) {
-    pw.print("int");
+    pw.print("int ");
   }
 }

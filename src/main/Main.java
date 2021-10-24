@@ -1,15 +1,19 @@
 package main;
 
 /*TODO
-  - Verificar tipos, por exemplo :
-      var Int a;
-      a = 2;
-      a = 'erro'
   - As expressoes do if e while devem ser booleanas.
-  - As operacoes aritmeticas exigem operandos inteiros. Operacoes booleanas como ! e && exigem operandos booleanos.
-    Considere true < false e use as operacoes de comparacoes usuais para strings.
-  - ajustar o gerador de C - como faz ao declarar String, pois em C não temos String e sim char
+
+  - As operacoes aritmeticas exigem operandos inteiros.
+  - Operacoes booleanas como ! e && exigem operandos booleanos.
+  - Considere true < false
+  - Use as operacoes de comparacoes usuais para strings.
+
   - Criar eval
+  - Verificar os comentários em conjunto
+  - Verificar escopo das variaveis
+  - Ajustar valores de false e true para imprimir - GenC
+  _ Verificar o compositeExpr, por causa dos tipos
+  - Ajustar o ++ no genC
 
  */
 
@@ -20,10 +24,27 @@ import java.io.PrintWriter;
 
 public class Main {
   public static void main(String []args){
-    char []input = ("var String n;\r\n"
-            + "n = 'teste'; \r\n"
-            + "var String a;"
-            + "a = true ++ false ++ 'teste'; \r\n "
+    char []input = (
+            //"var Int n;"
+            //+ "var Int i;"
+            "var Boolean verd;"
+            + "verd = true;"
+            + "if !!verd {"
+            + " var Int i;"
+            + " i = 0;"
+            //+ "while i <= n && !!verd {" --> Verificar isso
+
+            + "}\r\n"
+            + " i = i + 1;\r\n"
+
+            /*"var Int a;"
+            + "var Int b;"
+            + "if a%2 == 2 {"
+            + " var String i;"
+            + " i = 0;"
+            + "}"
+            + "i = i + 1;\r\n"*/
+            //== (0+0*0/1)
             /*+ "var Int soma; \r\n"
             + "soma = 0; \r\n"
             + "var Int i; \r\n"

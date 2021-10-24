@@ -12,7 +12,7 @@ public class VariableExpr extends Expr{
 
   @Override
   public Type getType() {
-    return null;
+    return v.getType();
   }
 
   @Override
