@@ -1,18 +1,13 @@
 package main;
 
 /*TODO
-  - As expressoes do if e while devem ser booleanas.
 
-  - As operacoes aritmeticas exigem operandos inteiros.
-  - Operacoes booleanas como ! e && exigem operandos booleanos.
-  - Considere true < false
-  - Use as operacoes de comparacoes usuais para strings.
+  - Ajustar aspas duplas inves de aspa simples
 
   - Criar eval
   - Verificar os comentários em conjunto
-  - Verificar escopo das variaveis
+  - Verificar escopo das variaveis ?
   - Ajustar valores de false e true para imprimir - GenC
-  _ Verificar o compositeExpr, por causa dos tipos
   - Ajustar o ++ no genC
 
  */
@@ -25,17 +20,20 @@ import java.io.PrintWriter;
 public class Main {
   public static void main(String []args){
     char []input = (
-            //"var Int n;"
-            //+ "var Int i;"
-            "var Boolean verd;"
-            + "verd = true;"
-            + "if !!verd {"
-            + " var Int i;"
-            + " i = 0;"
+            "var Int n;"
+            + "var Int i;"
+            + "var Boolean verd;"
+            + "if 'abc' < 'cba' && 'A' == 'A'  {\r\n"
+            + "}\r\n"
+            + "else {"
+            + "}\r\n"
+            //+ "if !!verd {"
+            //+ " var Int i;"
+            //+ " i = 0;"
             //+ "while i <= n && !!verd {" --> Verificar isso
 
-            + "}\r\n"
-            + " i = i + 1;\r\n"
+            //+ "}\r\n"
+            //+ " i = i + 1;\r\n"
 
             /*"var Int a;"
             + "var Int b;"

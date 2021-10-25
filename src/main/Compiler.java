@@ -84,6 +84,11 @@ public class Compiler {
   private WhileStat whileStat() {
     lexer.nextToken();
     Expr e = expr();
+
+    //verificar se a expressao é boolean
+    if ( e.getType() != Type.booleanType )
+      System.out.println("Tipo Boolean esperado na expressão while");
+
     StatList statList = statList();
 
     return new WhileStat(e, statList);
@@ -135,9 +140,11 @@ public class Compiler {
 
   private IfStat ifStat() {
     lexer.nextToken();
-    //verificar se a expressao é boolean
-
     Expr e = expr();
+
+    //verificar se a expressao é boolean
+    if ( e.getType() != Type.booleanType )
+      System.out.println("Tipo Boolean esperado na expressão if");
 
     StatList ifPart = statList();
     StatList elsePart = null;
@@ -163,6 +170,10 @@ public class Compiler {
     while (lexer.token == Symbol.VAR || lexer.token == Symbol.IDENT || lexer.token == Symbol.FOR || lexer.token == Symbol.IF ||
             lexer.token == Symbol.WHILE || lexer.token == Symbol.PRINTLN || lexer.token == Symbol.PRINT) {
       statList.add(stat());
+    }
+
+    if (lexer.token != Symbol.CLOSECHAVE) {
+      System.out.println("Esperado }");
     }
 
     lexer.nextToken();
