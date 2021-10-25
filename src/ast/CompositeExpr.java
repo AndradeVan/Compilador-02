@@ -69,6 +69,9 @@ public class CompositeExpr extends Expr{
       case OR:
         pw.print(" || ");
         break;
+      case PLUSPLUS:
+        pw.print(" ++ ");
+        break;
     }
     right.genC(pw);
   }

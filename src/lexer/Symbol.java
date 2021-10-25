@@ -8,7 +8,7 @@ public enum Symbol {
   Type,
   Boolean,
   String,
-  CHARACTER,
+  LiteralString,
   PLUSPLUS,
   TRUE,
   FALSE,

@@ -36,9 +36,8 @@ public class Lexer {
         nextToken();
         //comentários em bloco /* */
       }else if (input[tokenPos] == '/' && input[tokenPos + 1] == '*') {
-        //dar uma olhada aqui, tá errado.
         tokenPos += 2;
-        while (input[tokenPos] != '*' && input[tokenPos + 1] != '/') {
+        while (input[tokenPos] != '*' || input[tokenPos + 1] != '/') {
           tokenPos++;
         }
         tokenPos += 2;
@@ -75,17 +74,17 @@ public class Lexer {
           token = Symbol.IN;
           tokenPos += 2;
         }
+        //println
+        else if(ch == 'p' && tokenPos + 6 < input.length && input[tokenPos+1] == 'r' && input[tokenPos+2] == 'i' && input[tokenPos+3] == 'n'
+                && input[tokenPos+4] == 't' && input[tokenPos+5] == 'l' && input[tokenPos+6] == 'n'){
+          token = Symbol.PRINTLN;
+          tokenPos += 7;
+        }
         //print
         else if(ch == 'p' && tokenPos + 4 < input.length && input[tokenPos+1] == 'r' && input[tokenPos+2] == 'i' && input[tokenPos+3] == 'n'
                 && input[tokenPos+4] == 't'){
           token = Symbol.PRINT;
           tokenPos += 5;
-        }
-        //println
-        else if(ch == 'p' && tokenPos + 6 < input.length && input[tokenPos+1] == 'r' && input[tokenPos+2] == 'i' && input[tokenPos+3] == 'n'
-                && input[tokenPos+4] == 't' && input[tokenPos+5] == 'l' && input[tokenPos+6] == 't'){
-          token = Symbol.PRINTLN;
-          tokenPos += 7;
         }
         //while
         else if(ch == 'w' && tokenPos + 4 < input.length && input[tokenPos+1] == 'h' && input[tokenPos+2] == 'i'
@@ -238,14 +237,13 @@ public class Lexer {
           //TODO - trocar para aspas duplas '\"'
           case '\'':
             StringBuffer ident = new StringBuffer();
-            token = Symbol.CHARACTER;
+            token = Symbol.LiteralString;
             tokenPos++;
             while(input[tokenPos] != '\''){
               ident.append(input[tokenPos]);
               tokenPos++;
             }
             stringIdent = ident.toString();
-            System.out.println(stringIdent);
             tokenPos++;
             break;
           default:

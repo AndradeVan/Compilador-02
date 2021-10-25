@@ -275,6 +275,7 @@ public class Compiler {
     while((op = lexer.token) == Symbol.PLUS || op == Symbol.MINUS) {
       lexer.nextToken();
       right = multExpr();
+      //tratamento left e right como null, por exemplo, i = i + 2; sem declarar variavel i
       if( left.getType() != Type.intType || right.getType() != Type.intType){
         System.out.println("Opaa.... ! tem que ser com operador inteiroo");
       }
@@ -301,7 +302,7 @@ public class Compiler {
   private Expr simpleExpr() {
     Expr e;
     switch(lexer.token) {
-      case CHARACTER:
+      case LiteralString:
         String value = lexer.getStringIdent();
         lexer.nextToken();
         return new StringExpr(value);
