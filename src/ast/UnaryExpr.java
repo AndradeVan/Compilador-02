@@ -3,6 +3,7 @@ package ast;
 import lexer.Symbol;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 public class UnaryExpr extends Expr{
   private Expr expr;
@@ -32,5 +33,10 @@ public class UnaryExpr extends Expr{
         break;
     }
     expr.genC(pw);
+  }
+
+  @Override
+  public int eval(Map<String, Integer> memory) {
+    return 0;
   }
 }

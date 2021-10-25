@@ -1,6 +1,7 @@
 package ast;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 public class VariableExpr extends Expr{
 
@@ -13,6 +14,12 @@ public class VariableExpr extends Expr{
   @Override
   public Type getType() {
     return v.getType();
+  }
+
+  @Override
+  public int eval(Map<String, Integer> memory) {
+    int valueVariable = memory.get(v.getName());
+    return valueVariable;
   }
 
   @Override

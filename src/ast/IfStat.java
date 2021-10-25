@@ -1,6 +1,7 @@
 package ast;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 public class IfStat extends Stat{
   private Expr expr;
@@ -25,5 +26,27 @@ public class IfStat extends Stat{
       elsePart.genC(pw);
       pw.println("}");
     }
+  }
+
+  @Override
+  public void eval(Map<String, Integer> memory) {
+    int element = expr.eval(memory);
+
+    boolean bool = convertBool(element);
+
+    if(bool){
+      this.ifPart.eval(memory);
+    } else {
+      if(elsePart != null) {
+        this.elsePart.eval(memory);
+      }
+    }
+  }
+
+  private boolean convertBool(int element) {
+    if(element == 1){
+      return true;
+    }
+    return false;
   }
 }

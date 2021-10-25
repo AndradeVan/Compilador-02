@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/ast/AssignStat.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/BooleanExpr.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/BooleanType.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/CompositeExpr.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/Expr.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/ForStat.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/IfStat.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/IntType.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/NumberExpr.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/PrintStat.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/PrintlnStat.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/Program.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/Stat.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/StatList.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/StringExpr.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/StringType.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/Type.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/UnaryExpr.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/VarListStat.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/Variable.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/VariableExpr.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/ast/WhileStat.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/lexer/Lexer.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/lexer/Symbol.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/Compiler.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/Main.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/Teste.java" charset="windows-1252" />
+  </component>
+</project>

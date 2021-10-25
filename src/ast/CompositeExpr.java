@@ -3,6 +3,7 @@ package ast;
 import lexer.Symbol;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 public class CompositeExpr extends Expr{
   private Symbol op;
@@ -74,5 +75,10 @@ public class CompositeExpr extends Expr{
         break;
     }
     right.genC(pw);
+  }
+
+  @Override
+  public int eval(Map<String, Integer> memory) {
+    return 0;
   }
 }

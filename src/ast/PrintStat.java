@@ -1,6 +1,7 @@
 package ast;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 public class PrintStat extends Stat{
 
@@ -15,5 +16,19 @@ public class PrintStat extends Stat{
     pw.print("printf(\"%d\", ");
     expr.genC(pw);
     pw.println(");");
+  }
+
+  @Override
+  public void eval(Map<String, Integer> memory) {
+    int valueBoolean = expr.eval(memory);
+
+    System.out.println(convertBool(valueBoolean) ? "true" : "false");
+  }
+
+  private boolean convertBool(int element) {
+    if(element == 1){
+      return true;
+    }
+    return false;
   }
 }

@@ -1,6 +1,7 @@
 package ast;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 public class NumberExpr extends Expr{
   private int value;
@@ -19,5 +20,10 @@ public class NumberExpr extends Expr{
   @Override
   public void genC(PrintWriter pw) {
     pw.print(value);
+  }
+
+  @Override
+  public int eval(Map<String, Integer> memory) {
+    return value;
   }
 }

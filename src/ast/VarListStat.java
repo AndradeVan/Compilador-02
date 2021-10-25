@@ -1,6 +1,7 @@
 package ast;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 public class VarListStat extends Stat{
 
@@ -17,5 +18,10 @@ public class VarListStat extends Stat{
     type.genC(pw);
     pw.print(ident);
     pw.println(";");
+  }
+
+  @Override
+  public void eval(Map<String, Integer> memory) {
+
   }
 }

@@ -1,6 +1,7 @@
 package ast;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 public class ForStat extends Stat{
   private String ident;
@@ -24,5 +25,15 @@ public class ForStat extends Stat{
     pw.println(";" + ident +"++ ) {");
     statList.genC(pw);
     pw.println("}");
+  }
+
+  @Override
+  public void eval(Map<String, Integer> memory) {
+    int firstValue = first.eval(memory);
+    int secondValue = second.eval(memory);
+    for (int i = firstValue; i < secondValue; i++) {
+      memory.put("" + ident, i);
+      statList.eval(memory);
+    }
   }
 }

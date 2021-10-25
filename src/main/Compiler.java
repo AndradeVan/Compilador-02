@@ -27,14 +27,12 @@ public class Compiler {
   private Program program() {
 
     List<Stat> statList = new ArrayList<>();
-    ArrayList<VarListStat> arrayVariable = null;
 
     statList.add(stat());
 
     while(lexer.token == Symbol.VAR || lexer.token == Symbol.IDENT || lexer.token ==  Symbol.IF || lexer.token == Symbol.FOR
     || lexer.token == Symbol.WHILE || lexer.token == Symbol.PRINT || lexer.token == Symbol.PRINTLN) {
       statList.add(stat());
-
     }
     return new Program(statList);
   }
@@ -85,9 +83,9 @@ public class Compiler {
     lexer.nextToken();
     Expr e = expr();
 
-    //verificar se a expressao √© boolean
+    //verificar se a expressao È boolean
     if ( e.getType() != Type.booleanType )
-      System.out.println("Tipo Boolean esperado na express√£o while");
+      System.out.println("Tipo Boolean esperado na express„o while");
 
     StatList statList = statList();
 
@@ -102,7 +100,7 @@ public class Compiler {
 
       //adiciona variavel no escopo do for
       if( symbolTable.get(ident) != null) {
-        System.out.println("Variavel " + ident + " j√° foi declarada.");
+        System.out.println("Variavel " + ident + " j· foi declarada.");
       }
 
       Variable v = new Variable(ident,Type.intType);
@@ -123,10 +121,10 @@ public class Compiler {
       Expr endExpr = expr();
       second = lexer.getValueNumber();
 
-      //isso t√° errado, pq podemos declarar uma variavel a = 1 e usar a variavel e nao o numero
-      //verificar se o primeiro elemento √© maior que o segundo
+      //isso t· errado, pq podemos declarar uma variavel a = 1 e usar a variavel e nao o numero
+      //verificar se o primeiro elemento È maior que o segundo
       if(first > second) {
-        System.out.println("Erro de execu√ß√£o");
+        System.out.println("Erro de execuÁ„o");
         System.exit(0);
       }
       StatList statList = statList();
@@ -142,9 +140,9 @@ public class Compiler {
     lexer.nextToken();
     Expr e = expr();
 
-    //verificar se a expressao √© boolean
+    //verificar se a expressao È boolean
     if ( e.getType() != Type.booleanType )
-      System.out.println("Tipo Boolean esperado na express√£o if");
+      System.out.println("Tipo Boolean esperado na express„o if");
 
     StatList ifPart = statList();
     StatList elsePart = null;
@@ -187,7 +185,7 @@ public class Compiler {
 
     Variable v = symbolTable.get(name);
     if(v == null) {
-      System.out.println("Variavel " + name + " n√£o foi declarada.");
+      System.out.println("Variavel " + name + " n„o foi declarada.");
     }
     lexer.nextToken();
 
@@ -203,7 +201,7 @@ public class Compiler {
     }
 
     if(v.getType() != e.getType()){
-      System.out.println("A variavel "+ name + " √© do tipo "+ v.getType());
+      System.out.println("A variavel "+ name + " È do tipo "+ v.getType());
     }
 
     lexer.nextToken();
@@ -243,7 +241,7 @@ public class Compiler {
       lexer.nextToken();
       right = relExpr();
       if( left.getType() != Type.booleanType || right.getType() != Type.booleanType){
-        System.out.println("Os valores da opera√ß√£o "+ Symbol.AND + " tem que ser do tipo Boolean." );
+        System.out.println("Os valores da operaÁ„o "+ Symbol.AND + " tem que ser do tipo Boolean." );
       }
       left = new CompositeExpr(left, Symbol.AND, right);
     }
@@ -260,7 +258,7 @@ public class Compiler {
       lexer.nextToken();
       right = addExpr();
       if( left.getType() != right.getType()){
-        System.out.println("Os valores da opera√ß√£o "+ op + " tem que ser do mesmo tipo");
+        System.out.println("Os valores da operaÁ„o "+ op + " tem que ser do mesmo tipo");
       }
       left = new CompositeExpr(left, op, right);
     }
@@ -357,7 +355,7 @@ public class Compiler {
         Variable v = symbolTable.get(name);
 
         if(v == null) {
-          System.out.println("Variavel " + name + " n√£o foi declarada.");
+          System.out.println("Variavel " + name + " n„o foi declarada.");
         }
         lexer.nextToken();
 
@@ -377,7 +375,7 @@ public class Compiler {
     String name = lexer.getStringValue();
 
     if(symbolTable.get(name) != null) {
-      System.out.println("Variavel "+ name + " j√° foi declarada.");
+      System.out.println("Variavel "+ name + " j· foi declarada.");
     }
 
     Variable v = new Variable(name, type);
@@ -405,7 +403,7 @@ public class Compiler {
         result = Type.stringType;
         break;
       default:
-        throw new IllegalStateException("Compilador n√£o suporta o tipo: " + lexer.token);
+        throw new IllegalStateException("Compilador n„o suporta o tipo: " + lexer.token);
     }
     lexer.nextToken();
     return result;

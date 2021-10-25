@@ -1,6 +1,7 @@
 package ast;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 public class BooleanExpr extends Expr{
 
@@ -20,6 +21,11 @@ public class BooleanExpr extends Expr{
   @Override
   public void genC(PrintWriter pw) {
     pw.print( value ? "1" : "0" );
+  }
+
+  @Override
+  public int eval(Map<String, Integer> memory) {
+    return value ? 1 : 0;
   }
 
 

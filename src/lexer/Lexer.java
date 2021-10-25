@@ -34,7 +34,7 @@ public class Lexer {
           tokenPos++;
         }
         nextToken();
-        //coment√°rios em bloco /* */
+        //coment·rios em bloco /* */
       }else if (input[tokenPos] == '/' && input[tokenPos + 1] == '*') {
         tokenPos += 2;
         while (input[tokenPos] != '*' || input[tokenPos + 1] != '/') {

@@ -5,8 +5,13 @@ package main;
   - Ajustar aspas duplas inves de aspa simples
 
   - Criar eval
-  - Verificar escopo das variaveis -> nÃ£o precisa, mas podemos fazer
-  - print e println podem imprimir valores de todos os tipos. Para true booleano, deve ser impresso true mesmo. Idem para false.
+    - print e println podem imprimir valores de todos os tipos. Para true booleano, deve ser impresso true mesmo. Idem para false.
+    - como retornar uma strinf, boolean no print
+    - for ok
+    - print e println ok
+
+  - Verificar escopo das variaveis -> não precisa, mas podemos fazer
+
   - Criar class de erro
 
  */
@@ -15,10 +20,29 @@ package main;
 import ast.Program;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
   public static void main(String []args){
-    char []input = (" var Int n;"
+    char []input = ("var Int n;"
+            + "n = 100;"
+            + "var Int b;"
+            + "b = 2;"
+            + "var Boolean i;"
+            + "i = true;"
+            + "print i;"
+            + "println n;\r\n"
+            + "for j in 1..100 {"
+            + "print j;"
+            + "}\r\n"
+            + "if i {"
+            + "println false;"
+            + "}else{"
+            + " print b;"
+            + "}\r\n"
+    ).toCharArray();
+    /*char []input = (" var Int n;"
             + "n = 100;"
             + "var Int soma; \r\n"
             + "soma = 0; \r\n"
@@ -75,13 +99,15 @@ public class Main {
             + "if 0 < 1 && ((true >= false && 'abc' < 'cba') && 'A' == 'A') {"
             + " println 'Ufa, deu certo!';"
             + "}\r\n"
-            ).toCharArray();
+            ).toCharArray();*/
 
 
     Compiler compiler = new Compiler();
+    Map<String, Integer> memory = new HashMap<>();
     Program program = compiler.compile(input);
 
-    program.genC(new PrintWriter(System.out));
+    //program.genC(new PrintWriter(System.out));
+    program.eval(memory);
   }
 
 
