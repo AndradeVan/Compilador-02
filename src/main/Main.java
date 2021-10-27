@@ -14,26 +14,14 @@ package main;
 
 import ast.Program;
 
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
   public static void main(String []args){
 
-    /*char []input = ("var String n;"
-            + "var Boolean souVerd;"
-            //+"for cont in 1..5 {"
-            //+"  souVerd = true;"
-            //+"n = (souVerd ++ ' ') ++ cont;\r\n"
-            //+ "println 'teste';"
-            //+"  println souVerd ++ (' ' ++ cont);"
-            +"  print (souVerd ++ ' ') ++ n;\r\n"
-            //+"  print 'valor = ' ++ souVerd ++ ' ' ++ cont;"
-            //+"  print souVerd ++ ' ' ++ 0 ++ n ++ 'teste'    ;\n\r"
-            //+"}\r\n"
-    ).toCharArray();*/
-    char []input = (" var Int n;"
+    /*char []input = (" var Int n;"
             + "n = 100;\r\n"
             + "var Int soma; \r\n"
             + "soma = 0; \r\n"
@@ -90,16 +78,43 @@ public class Main {
             + "if 0 < 1 && ((true >= false && 'abc' < 'cba') && 'A' == 'A') {"
             + " println 'Ufa, deu certo!';"
             + "}\r\n"
-            ).toCharArray();
+            ).toCharArray();*/
 
+
+    File file;
+    FileReader stream;
+
+    file = new File(args[1]);
+    if ( ! file.exists() || ! file.canRead() ) {
+      System.out.println("Arquivo " + args[1] + " não existe ou não pode ser lido");
+      return ;
+    }
+    try {
+      stream = new FileReader(file);
+    } catch ( FileNotFoundException e ) {
+      System.out.println("Erro: arquivo não existe mais");
+      throw new RuntimeException();
+    }
+    char []input = new char[ (int ) file.length() + 1 ];
+
+    try {
+      stream.read( input, 0, (int ) file.length() );
+    } catch ( IOException e ) {
+      System.out.println("Erro ao ler o arquivo " + args[1]);
+      return ;
+    }
 
     Compiler compiler = new Compiler();
-    Map<String, Integer> memory = new HashMap<>();
     Program program = compiler.compile(input);
 
-    program.genC(new PrintWriter(System.out));
+    Map<String, Integer> memory = new HashMap<>();
 
-    //program.eval(memory);
+    if(args[0].equals("-gen")){
+      program.genC(new PrintWriter(System.out));
+
+    }else if(args[0].equals("-run")){
+      program.eval(memory);
+    }
 
   }
 

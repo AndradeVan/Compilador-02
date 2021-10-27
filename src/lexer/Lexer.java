@@ -241,10 +241,10 @@ public class Lexer {
             tokenPos++;
             break;
           //TODO - trocar para aspas duplas '\"'
-          case '\'':
+          case '\"':
             StringBuffer ident = new StringBuffer();
             tokenPos++;
-            while(input[tokenPos] != '\''){
+            while(input[tokenPos] != '\"'){
               ident.append(input[tokenPos]);
               tokenPos++;
             }

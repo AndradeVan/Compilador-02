@@ -1,0 +1,17 @@
+var Int n;
+n = 0;
+if n > 0 {
+var String n;
+n = "sou String";
+for k in 1..5 {
+var Boolean n;
+n = true;
+println n;
+}
+n = "continuo String";
+}
+else {
+// n eh Int
+n = 1;
+println n;
+}
