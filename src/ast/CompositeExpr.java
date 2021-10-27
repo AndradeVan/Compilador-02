@@ -25,19 +25,23 @@ public class CompositeExpr extends Expr{
   @Override
   public Type getType() {
 
-   if((listSymbol.contains(Symbol.PRINTLN) == true || listSymbol.contains(Symbol.PRINT) == true )
-           && op == Symbol.PLUSPLUS) {
-     return typeVar;
+   if(listSymbol != null) {
+     if ((listSymbol.contains(Symbol.PRINTLN) == true || listSymbol.contains(Symbol.PRINT) == true)
+             && op == Symbol.PLUSPLUS) {
+       return typeVar;
+     }
+   }else {
+     if (op == Symbol.PLUSPLUS) {
+       return Type.stringType;
+     } else if (op == Symbol.EQ || op == Symbol.NEQ || op == Symbol.LE || op == Symbol.LT ||
+             op == Symbol.GE || op == Symbol.GT ||
+             op == Symbol.AND || op == Symbol.OR) {
+       return Type.booleanType;
+     }else {
+       return Type.intType;
+     }
    }
-   else if(op == Symbol.PLUSPLUS) {
-     //olhar aqqui
-     return Type.stringType;
-   }else if( op == Symbol.EQ || op == Symbol.NEQ || op == Symbol.LE || op == Symbol.LT ||
-            op == Symbol.GE || op == Symbol.GT ||
-            op == Symbol.AND || op == Symbol.OR )
-      return Type.booleanType;
-    else
-      return Type.intType;
+   return Type.stringType;
   }
 
   @Override

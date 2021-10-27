@@ -21,7 +21,7 @@ import java.util.Map;
 public class Main {
   public static void main(String []args){
 
-    char []input = ("var String n;"
+    /*char []input = ("var String n;"
             + "var Boolean souVerd;"
             //+"for cont in 1..5 {"
             //+"  souVerd = true;"
@@ -32,9 +32,9 @@ public class Main {
             //+"  print 'valor = ' ++ souVerd ++ ' ' ++ cont;"
             //+"  print souVerd ++ ' ' ++ 0 ++ n ++ 'teste'    ;\n\r"
             //+"}\r\n"
-    ).toCharArray();
-    /*char []input = (" var Int n;"
-            + "n = 100;"
+    ).toCharArray();*/
+    char []input = (" var Int n;"
+            + "n = 100;\r\n"
             + "var Int soma; \r\n"
             + "soma = 0; \r\n"
             + "var Int i; \r\n"
@@ -73,7 +73,7 @@ public class Main {
             + "   str = 'sou String';"
             + "   for cont in 1..5 {"
             + "     souVerd = true;"
-            + "     println (souVerd ++ ' ') ++ cont;"
+            + "     println 'O valor dessa porra é = ' ++ (souVerd ++ ' ') ++ cont;"
             + "   }"
             + "   str = 'continuo String';"
             + "   println 'str = ' ++ str;"
@@ -90,7 +90,7 @@ public class Main {
             + "if 0 < 1 && ((true >= false && 'abc' < 'cba') && 'A' == 'A') {"
             + " println 'Ufa, deu certo!';"
             + "}\r\n"
-            ).toCharArray(); */
+            ).toCharArray();
 
 
     Compiler compiler = new Compiler();

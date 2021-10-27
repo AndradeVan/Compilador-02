@@ -136,12 +136,7 @@ public class Lexer {
         valueNumber = Integer.valueOf(number.toString()).intValue();
 
         //verificar com espaço e ir incrementando e por fim, verificar elemento do meio
-        System.out.println(input[tokenPos]);
-        if(token == Symbol.PRINTLN || token == Symbol.PRINT ||
-                token == Symbol.LEFTPAR || input[tokenPos] == ' ' || input[tokenPos] == ';'){
-          while(input[tokenPos+1] == ' ')
-            tokenPos++;
-          System.out.println(input[tokenPos]);
+        if(token == Symbol.PRINTLN || token == Symbol.PRINT ){
           token = Symbol.TYPENULL;
         }else
           token = Symbol.NUMBER;
@@ -258,12 +253,8 @@ public class Lexer {
             String removeEspaco = stringIdent.trim();
 
             //não suporta ' '; e no meio de uma string
-            if(token == Symbol.PRINTLN || token == Symbol.PRINT || removeEspaco.isEmpty() ||
-            token == Symbol.LEFTPAR || input[tokenPos+1] == ';' || input[tokenPos+1] == ' ') {
-              while(input[tokenPos+1] == ' ')
-                tokenPos++;
+            if(token == Symbol.PRINTLN || token == Symbol.PRINT || removeEspaco.isEmpty())
               token = Symbol.TYPENULLSTRING;
-            }
             else {
               token = Symbol.LiteralString;
             }
