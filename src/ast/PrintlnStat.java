@@ -8,10 +8,8 @@ public class PrintlnStat extends Stat{
   private ArrayList<Expr> expr;
 	
   public PrintlnStat(ArrayList<Expr> expr) {
-		
-  //public PrintlnStat(Expr expr) {
-    this.expr = expr;
 
+    this.expr = expr;
   }
 
   @Override
@@ -35,7 +33,6 @@ public class PrintlnStat extends Stat{
 
 		pw.print("\"");
 
-
 		for (Expr r : expr) {
 
 			if (r.getType() == null) {
@@ -45,6 +42,7 @@ public class PrintlnStat extends Stat{
 				r.genC(pw);
 			}
 		}
+		pw.println(");");
 	}
 		/*
 //	pw.print(expr.getClass());
