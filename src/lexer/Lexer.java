@@ -124,6 +124,7 @@ public class Lexer {
             tokenPos++;
           }
           stringValue = ident.toString();
+
           token = Symbol.IDENT;
         }
       } else if(Character.isDigit(ch)){
@@ -133,7 +134,11 @@ public class Lexer {
           tokenPos++;
         }
         valueNumber = Integer.valueOf(number.toString()).intValue();
-        token = Symbol.NUMBER;
+
+        if(token == Symbol.PRINTLN || token == Symbol.PRINT) {
+          token = Symbol.TYPENULL;
+        }else
+          token = Symbol.NUMBER;
       }else {
         switch (ch) {
           case ';':
@@ -237,13 +242,23 @@ public class Lexer {
           //TODO - trocar para aspas duplas '\"'
           case '\'':
             StringBuffer ident = new StringBuffer();
-            token = Symbol.LiteralString;
             tokenPos++;
             while(input[tokenPos] != '\''){
               ident.append(input[tokenPos]);
               tokenPos++;
             }
             stringIdent = ident.toString();
+
+            String removeEspaco = stringIdent.trim();
+
+            //inves de ser print verificar se é uma variavel
+            if(token == Symbol.PRINTLN || token == Symbol.PRINT || removeEspaco.isEmpty() ||
+            token == Symbol.LEFTPAR) {
+              token = Symbol.TYPENULLSTRING;
+            }else {
+              token = Symbol.LiteralString;
+            }
+
             tokenPos++;
             break;
           default:

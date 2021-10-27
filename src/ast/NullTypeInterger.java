@@ -3,28 +3,30 @@ package ast;
 import java.io.PrintWriter;
 import java.util.Map;
 
-public class StringExpr extends Expr{
+public class NullTypeInterger extends Expr{
 
-  private String value;
+  private int value;
 
-  public StringExpr(String value) {
+  public NullTypeInterger(int value) {
     this.value = value;
   }
 
+  public int getValue() { return value; }
+
   @Override
   public Type getType() {
-    return Type.stringType;
+    return null;
   }
 
   @Override
   public void genC(PrintWriter pw) {
-    pw.print(value);
-  }
+      pw.print(value);
+    }
+
 
   @Override
   public int eval(Map<String, Integer> memory) {
-
-    //System.out.println(valueVariable);
     return 0;
   }
 }
+

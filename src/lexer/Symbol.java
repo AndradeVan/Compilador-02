@@ -4,6 +4,7 @@ public enum Symbol {
 
   Int,
   VAR,
+  TYPENULL,
   IDENT,
   Type,
   Boolean,
@@ -42,5 +43,6 @@ public enum Symbol {
   IN,
   OPENCHAVE,
   CLOSECHAVE,
+  TYPENULLSTRING,
 
 }

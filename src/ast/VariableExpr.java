@@ -24,6 +24,7 @@ public class VariableExpr extends Expr{
 
   @Override
   public void genC(PrintWriter pw) {
+
     pw.print(v.getName());
   }
 }

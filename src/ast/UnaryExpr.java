@@ -37,6 +37,19 @@ public class UnaryExpr extends Expr{
 
   @Override
   public int eval(Map<String, Integer> memory) {
-    return 0;
+    /*int valeuMinus = -1;
+    int valuePlus = 1;
+    if (op == Symbol.MINUS){
+      return valeuMinus * expr.eval(memory);
+    }else if (op == Symbol.PLUS) {
+      return valuePlus * (expr.eval(memory) + valuePlus) ;
+    }else if (op == Symbol.NOT) {
+      if (valeuMinus * expr.eval(memory) != expr.eval(memory)) {
+        return 0;
+      }else {
+        return 1;
+      }
+    }*/
+    return 1;
   }
 }

@@ -1,33 +1,55 @@
 package ast;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class PrintlnStat extends Stat{
-  private Expr expr;
+  private ArrayList<Expr> expr;
 
-  public PrintlnStat(Expr expr) {
+  public PrintlnStat(ArrayList<Expr> expr) {
     this.expr = expr;
+
   }
 
   @Override
   public void genC(PrintWriter pw) {
-    pw.print("printf(\"%d\", ");
-    expr.genC(pw);
+
+    pw.print("printf (\"");
+
+    for(Expr r: expr){
+      if(r.getType() != null) {
+        if (r.getType().getName() == Type.intType.getName())
+          pw.print(" %d");
+        else if (r.getType().getName() == Type.stringType.getName()) {
+          pw.print(" %s");
+        } else if (r.getType().getName() == Type.booleanType.getName()) {
+          pw.print(" %d");
+        }
+      }else {
+        r.genC(pw);
+      }
+    }
+
+    pw.print("\"");
+
+
+    for(Expr r: expr){
+
+      if(r.getType() == null) {
+        pw.print("");
+      }else {
+        pw.print(", ");
+        r.genC(pw);
+      }
+    }
     pw.println(");");
+
   }
 
   @Override
   public void eval(Map<String, Integer> memory) {
-    int valueBoolean = expr.eval(memory);
-
-    System.out.println(convertBool(valueBoolean) ? "true" : "false");
+    //System.out.println(expr.eval(memory));
   }
 
-  private boolean convertBool(int element) {
-    if(element == 1){
-      return true;
-    }
-    return false;
-  }
 }

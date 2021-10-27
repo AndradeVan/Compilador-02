@@ -17,6 +17,7 @@ public class NumberExpr extends Expr{
     return Type.intType;
   }
 
+
   @Override
   public void genC(PrintWriter pw) {
     pw.print(value);
