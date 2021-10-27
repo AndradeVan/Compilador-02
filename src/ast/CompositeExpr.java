@@ -26,6 +26,14 @@ public class CompositeExpr extends Expr{
     else
       return Type.intType;
   }
+  
+  public Expr getLeft() {
+	  return left;
+  }
+  
+  public Expr getRight() {
+	  return right;
+  }
 
   @Override
   public void genC(PrintWriter pw) {
