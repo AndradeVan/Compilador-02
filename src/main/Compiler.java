@@ -75,7 +75,6 @@ public class Compiler {
       System.out.println("Esqueceu ;");
     }
     lexer.nextToken();
-
     return new PrintlnStat(e);
   }
 

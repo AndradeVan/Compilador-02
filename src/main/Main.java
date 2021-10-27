@@ -33,7 +33,7 @@ public class Main {
             + "i = true;"
             + "print i;"
             + "println n;\r\n"
-            + "for j in 1..100 {"
+            + "for j in 1..10 {"
             + "print j;"
             + "}\r\n"
             + "if i {"
@@ -41,6 +41,11 @@ public class Main {
             + "}else{"
             + " print b;"
             + "}\r\n"
+            + "var Boolean souVerd;"
+            +"for cont in 1..5 {"
+                +"souVerd = true;"
+                + "println (souVerd ++ ' ') ++ cont;"
+            +"}\r\n"
     ).toCharArray();
     /*char []input = (" var Int n;"
             + "n = 100;"
@@ -106,8 +111,8 @@ public class Main {
     Map<String, Integer> memory = new HashMap<>();
     Program program = compiler.compile(input);
 
-    //program.genC(new PrintWriter(System.out));
-    program.eval(memory);
+    program.genC(new PrintWriter(System.out));
+//    program.eval(memory);
   }
 
 
