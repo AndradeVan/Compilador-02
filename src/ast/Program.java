@@ -15,6 +15,7 @@ public class Program {
 
   public void genC(PrintWriter pw) {
     pw.println("#include <stdio.h>");
+    pw.println("#include <stdbool.h>");
     pw.println("void main() {");
 
     for ( Stat stat : statList) {

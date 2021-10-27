@@ -12,10 +12,14 @@ public class Compiler {
 
   private Lexer lexer;
   private Hashtable<String, Variable> symbolTable;
+  private Hashtable<String, Type> typeVar;
+  private ArrayList<Symbol> symbolToken;
 
   public Program compile(char []input){
     lexer = new Lexer(input);
     symbolTable = new Hashtable<>();
+    typeVar = new Hashtable<>();
+    symbolToken = new ArrayList<Symbol>();
     lexer.nextToken();
 
     Program program = program();
@@ -64,6 +68,7 @@ public class Compiler {
 
   private PrintStat printStat() {
 
+    symbolToken.add(lexer.token);
     ArrayList<Expr> exprList = null;
     lexer.nextToken();
     exprList = exprList();
@@ -78,11 +83,16 @@ public class Compiler {
 
   private PrintlnStat printlnStat() {
 
+    symbolToken.add(lexer.token);
+
     lexer.nextToken();
 
     ArrayList<Expr> exprList = null;
 
     exprList = exprList();
+
+
+
     if(lexer.token != Symbol.SEMICOLON){
       System.out.println("Esqueceu ;");
       System.exit(0);
@@ -216,11 +226,14 @@ public class Compiler {
     }
     lexer.nextToken();
 
+    symbolToken.add(lexer.token);
+
     if(lexer.token != Symbol.ASSIGN) {
       System.out.println("Faltando =");
       System.exit(0);
     }
     lexer.nextToken();
+
 
     Expr e = expr();
 
@@ -240,6 +253,7 @@ public class Compiler {
 
   private ArrayList<Expr> exprList() {
     ArrayList<Expr> expr = new ArrayList<Expr>();
+
     expr.add(orExpr());
     while(lexer.token == Symbol.PLUSPLUS) {
       lexer.nextToken();
@@ -250,13 +264,17 @@ public class Compiler {
 
   private Expr expr() {
     Expr left, right;
+
+    Variable v = symbolTable.get(lexer.getStringValue());
+
     left = orExpr();
-    while(lexer.token == Symbol.PLUSPLUS) {
+    while (lexer.token == Symbol.PLUSPLUS) {
       lexer.nextToken();
       right = orExpr();
-      left = new CompositeExpr(left, Symbol.PLUSPLUS, right);
+      left = new CompositeExpr(left, Symbol.PLUSPLUS, right, symbolToken, v.getType());
     }
     return left;
+
   }
 
   private Expr orExpr() {
@@ -270,7 +288,7 @@ public class Compiler {
         System.out.println("Opaa.... ! tem que ser com operador boolean");
         System.exit(0);
       }
-      left = new CompositeExpr(left, Symbol.OR, right);
+      left = new CompositeExpr(left, Symbol.OR, right, null, null);
     }
     return left;
   }
@@ -285,7 +303,7 @@ public class Compiler {
         System.out.println("Os valores da operação "+ Symbol.AND + " tem que ser do tipo Boolean." );
         System.exit(0);
       }
-      left = new CompositeExpr(left, Symbol.AND, right);
+      left = new CompositeExpr(left, Symbol.AND, right,null, null);
     }
     return left;
   }
@@ -303,7 +321,7 @@ public class Compiler {
         System.out.println("Os valores da operação "+ op + " tem que ser do mesmo tipo");
         System.exit(0);
       }
-      left = new CompositeExpr(left, op, right);
+      left = new CompositeExpr(left, op, right,null, null);
     }
 
     return left;
@@ -320,7 +338,7 @@ public class Compiler {
         System.out.println("Os valores da operação "+ op + " tem que ser do mesmo tipo");
         System.exit(0);
       }
-      left = new CompositeExpr(left, op, right);
+      left = new CompositeExpr(left, op, right,null, null);
     }
     return left;
   }
@@ -336,7 +354,7 @@ public class Compiler {
         System.out.println("Os valores da operação "+ op + " tem que ser do mesmo tipo");
         System.exit(0);
       }
-      left = new CompositeExpr(left, op, right);
+      left = new CompositeExpr(left, op, right,null, null);
     }
     return left;
   }
@@ -391,6 +409,7 @@ public class Compiler {
           System.out.println("Erro faltando )");
           System.exit(0);
         }
+        symbolToken.add(lexer.token);
         lexer.nextToken();
         return e;
       default:

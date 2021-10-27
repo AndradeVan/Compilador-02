@@ -21,7 +21,8 @@ public class BooleanExpr extends Expr{
   @Override
   public void genC(PrintWriter pw) {
 
-    pw.print( value ? "true" : "false" );
+    //podemos colocar true ou false, mas lembrar de acrescentar o .h do boolean
+    pw.print( value ? "1" : "0" );
   }
 
   @Override

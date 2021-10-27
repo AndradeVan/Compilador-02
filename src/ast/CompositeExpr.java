@@ -4,24 +4,32 @@ import lexer.Symbol;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Hashtable;
 import java.util.Map;
 
 public class CompositeExpr extends Expr{
   private Symbol op;
   private Expr left;
   private Expr right;
+  private ArrayList<Symbol> listSymbol;
+  private Type typeVar;
 
-  public CompositeExpr(Expr left, Symbol op, Expr right){
+  public CompositeExpr(Expr left, Symbol op, Expr right, ArrayList<Symbol> listSymbol, Type typeVar){
     this.op = op;
     this.left = left;
     this.right = right;
+    this.listSymbol = listSymbol;
+    this.typeVar = typeVar;
   }
 
   @Override
   public Type getType() {
 
-   if(op == Symbol.PLUSPLUS) {
+   if((listSymbol.contains(Symbol.PRINTLN) == true || listSymbol.contains(Symbol.PRINT) == true )
+           && op == Symbol.PLUSPLUS) {
+     return typeVar;
+   }
+   else if(op == Symbol.PLUSPLUS) {
      //olhar aqqui
      return Type.stringType;
    }else if( op == Symbol.EQ || op == Symbol.NEQ || op == Symbol.LE || op == Symbol.LT ||
@@ -30,14 +38,6 @@ public class CompositeExpr extends Expr{
       return Type.booleanType;
     else
       return Type.intType;
-  }
-  
-  public Expr getLeft() {
-	  return left;
-  }
-  
-  public Expr getRight() {
-	  return right;
   }
 
   @Override
@@ -71,7 +71,7 @@ public class CompositeExpr extends Expr{
           pw.print(" > ");
           break;
         case GE:
-          pw.print(" => ");
+          pw.print(" >= ");
           break;
         case NEQ:
           pw.print(" != ");
