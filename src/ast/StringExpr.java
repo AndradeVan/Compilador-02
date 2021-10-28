@@ -23,9 +23,8 @@ public class StringExpr extends Expr{
   }
 
   @Override
-  public int eval(Map<String, Integer> memory) {
+  public Object eval(Map<String, Object> memory) {
 
-    //System.out.println(valueVariable);
-    return 0;
+    return value;
   }
 }

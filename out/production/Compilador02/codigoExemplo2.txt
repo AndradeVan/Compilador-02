@@ -1,0 +1,17 @@
+var Int s;
+s = 0;
+var Int p;
+p = 1;
+for j in 1..100 {
+var Int i;
+s = s + j;
+i = 0;
+while i < 100 {
+p = p + j*i;
+i = i + 1;
+}
+}
+var Int i;
+i = p/2;
+println i;
+println s;

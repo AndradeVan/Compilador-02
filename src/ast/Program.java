@@ -1,7 +1,6 @@
 package ast;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class Program {
     pw.flush();
   }
 
-  public void eval(Map<String, Integer> memory) {
+  public void eval(Map<String, Object> memory) {
     for ( Stat stat : statList) {
       stat.eval(memory);
     }

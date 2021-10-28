@@ -21,7 +21,7 @@ public class VarListStat extends Stat{
   }
 
   @Override
-  public void eval(Map<String, Integer> memory) {
+  public void eval(Map<String, Object> memory) {
 
   }
 }

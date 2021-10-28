@@ -36,7 +36,7 @@ public class UnaryExpr extends Expr{
   }
 
   @Override
-  public int eval(Map<String, Integer> memory) {
+  public Object eval(Map<String, Object> memory) {
     /*int valeuMinus = -1;
     int valuePlus = 1;
     if (op == Symbol.MINUS){

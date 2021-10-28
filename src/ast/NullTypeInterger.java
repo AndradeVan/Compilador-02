@@ -25,7 +25,7 @@ public class NullTypeInterger extends Expr{
 
 
   @Override
-  public int eval(Map<String, Integer> memory) {
+  public Object eval(Map<String, Object> memory) {
     return 0;
   }
 }

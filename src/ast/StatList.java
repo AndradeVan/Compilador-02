@@ -13,7 +13,7 @@ public class StatList {
     statList.add(stat);
   }
 
-  public void eval(Map<String, Integer> memory) {
+  public void eval(Map<String, Object> memory) {
     for(Stat stat : statList){
       stat.eval(memory);
     }

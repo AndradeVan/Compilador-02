@@ -4,7 +4,6 @@ import lexer.Symbol;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.Map;
 
 public class CompositeExpr extends Expr{
@@ -97,35 +96,44 @@ public class CompositeExpr extends Expr{
   }
 
   @Override
-  public int eval(Map<String, Integer> memory) {
-    /*if (op == Symbol.PLUS){
-      return left.eval(memory) + right.eval(memory);
-    }else if (op == Symbol.MINUS) {
-      return left.eval(memory) - right.eval(memory);
-    }else if (op == Symbol.MULT) {
-      return left.eval(memory) * right.eval(memory);
-    }else if (op == Symbol.DIV) {
-      return left.eval(memory) / right.eval(memory);
-    }else if (op == Symbol.REMAINDER) {
-      return left.eval(memory) % right.eval(memory);
-    }else if (op == Symbol.LT) {
-      if( left.eval(memory) < right.eval(memory)) {
-        return 1;
+  public Object eval(Map<String, Object> memory) {
+    if (op == Symbol.PLUS) {
+      return (Integer) left.eval(memory) + (Integer) right.eval(memory);
+    } else if (op == Symbol.MINUS) {
+      return (Integer) left.eval(memory) - (Integer) right.eval(memory);
+    } else if (op == Symbol.MULT) {
+      return (Integer) left.eval(memory) * (Integer) right.eval(memory);
+    } else if (op == Symbol.DIV) {
+      return (Integer) left.eval(memory) / (Integer) right.eval(memory);
+    } else if (op == Symbol.REMAINDER) {
+      return (Integer) left.eval(memory) % (Integer) right.eval(memory);
+    } else if (op == Symbol.LT) {
+      if (left.getType() == Type.booleanType && right.getType() == Type.booleanType) {
+        //errado
+        if ((Integer) left.eval(memory) < (Integer) right.eval(memory)) {
+          return "true";
+        }
+      } else if (left.getType() == Type.intType && right.getType() == Type.intType) {
+        if ((Integer) left.eval(memory) < (Integer) right.eval(memory)) {
+          return 1;
+        }
+      } else if (left.getType() == Type.stringType && right.getType() == Type.stringType) {
+        if ((Integer) left.eval(memory) < (Integer) right.eval(memory)) {
+          return "teste";
+        }
       }
-      return 0;
-    }
-    else if (op == Symbol.GT) {
-      if( left.eval(memory) > right.eval(memory)) {
+    }else if (op == Symbol.GT) {
+      if( (Integer) left.eval(memory) > (Integer) right.eval(memory)) {
         return 1;
       }
       return 0;
     }else if (op == Symbol.LE) {
-      if( left.eval(memory) <= right.eval(memory)) {
+      if( (Integer) left.eval(memory) <= (Integer) right.eval(memory)) {
         return 1;
       }
       return 0;
     } else if (op == Symbol.GE) {
-      if( left.eval(memory) >= right.eval(memory)) {
+      if( (Integer) left.eval(memory) >= (Integer) right.eval(memory)) {
         return 1;
       }
       return 0;
@@ -152,7 +160,7 @@ public class CompositeExpr extends Expr{
       }
 
     }else if(op == Symbol.OR) {
-      boolean element = convertBoolOr(left.eval(memory), right.eval(memory));
+      boolean element = convertBoolOr( (Integer) left.eval(memory),(Integer) right.eval(memory));
       if(element == true)
         return 1;
       else
@@ -160,9 +168,8 @@ public class CompositeExpr extends Expr{
     }
     else{
       throw new RuntimeException("Erro interno em CompositeExpr.");
-    }*/
+    }
     return 0;
-
   }
 
   private boolean convertBoolOr(int left, int right) {

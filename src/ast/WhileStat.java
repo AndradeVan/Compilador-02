@@ -22,13 +22,13 @@ public class WhileStat extends Stat{
   }
 
   @Override
-  public void eval(Map<String, Integer> memory) {
-    int element = expr.eval(memory);
-    boolean bool = convertBool(element);
+  public void eval(Map<String, Object> memory) {
+    Object element = expr.eval(memory);
+    boolean bool = convertBool(1);
     while(bool) {
       statList.eval(memory);
       element = expr.eval(memory);
-      bool = convertBool(element);
+      bool = convertBool(1);
     }
   }
 

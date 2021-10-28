@@ -21,6 +21,15 @@ import java.util.Map;
 public class Main {
   public static void main(String []args){
 
+
+    char []input = ("var Int n; "
+            + "var String a;"
+            + "a = \"teste\"; "
+            + "n = 2 + 4 - 6;"
+            + "\r\n"
+            + "print \"valor de a:\" ++ a ++ n;\r\n"
+            + "//print \"true = \" ++ (false < true);\r\n"
+    ).toCharArray();
     /*char []input = (" var Int n;"
             + "n = 100;\r\n"
             + "var Int soma; \r\n"
@@ -81,40 +90,15 @@ public class Main {
             ).toCharArray();*/
 
 
-    File file;
-    FileReader stream;
-
-    file = new File(args[1]);
-    if ( ! file.exists() || ! file.canRead() ) {
-      System.out.println("Arquivo " + args[1] + " não existe ou não pode ser lido");
-      return ;
-    }
-    try {
-      stream = new FileReader(file);
-    } catch ( FileNotFoundException e ) {
-      System.out.println("Erro: arquivo não existe mais");
-      throw new RuntimeException();
-    }
-    char []input = new char[ (int ) file.length() + 1 ];
-
-    try {
-      stream.read( input, 0, (int ) file.length() );
-    } catch ( IOException e ) {
-      System.out.println("Erro ao ler o arquivo " + args[1]);
-      return ;
-    }
-
     Compiler compiler = new Compiler();
     Program program = compiler.compile(input);
 
-    Map<String, Integer> memory = new HashMap<>();
+    Map<String, Object> memory = new HashMap<>();
 
-    if(args[0].equals("-gen")){
       program.genC(new PrintWriter(System.out));
 
-    }else if(args[0].equals("-run")){
       program.eval(memory);
-    }
+
 
   }
 

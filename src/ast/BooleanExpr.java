@@ -26,8 +26,9 @@ public class BooleanExpr extends Expr{
   }
 
   @Override
-  public int eval(Map<String, Integer> memory) {
-    return 0 ;
+  public Object eval(Map<String, Object> memory) {
+
+    return value ? "true" : "false" ;
   }
 
 

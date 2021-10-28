@@ -47,9 +47,15 @@ public class PrintStat extends Stat{
   }
 
   @Override
-  public void eval(Map<String, Integer> memory) {
+  public void eval(Map<String, Object> memory) {
 
-    //System.out.println(expr.eval(memory));
+    for(Expr stat : expr){
+      if(stat.getType() != null)
+        System.out.print(" "+ stat.eval(memory));
+      else
+        System.out.print(stat.eval(memory));
+    }
+
   }
 
 }

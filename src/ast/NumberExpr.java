@@ -24,7 +24,7 @@ public class NumberExpr extends Expr{
   }
 
   @Override
-  public int eval(Map<String, Integer> memory) {
-    return value;
+  public Object eval(Map<String, Object> memory) {
+    return (int) value;
   }
 }

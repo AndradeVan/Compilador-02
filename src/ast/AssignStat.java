@@ -26,8 +26,8 @@ public class AssignStat extends Stat{
   }
 
   @Override
-  public void eval(Map<String, Integer> memory) {
-    int e = expr.eval(memory);
+  public void eval(Map<String, Object> memory) {
+    Object e = expr.eval(memory);
     memory.put("" + ident, e);
   }
 }

@@ -29,10 +29,10 @@ public class IfStat extends Stat{
   }
 
   @Override
-  public void eval(Map<String, Integer> memory) {
-    int element = expr.eval(memory);
+  public void eval(Map<String, Object> memory) {
+    Object element = expr.eval(memory);
 
-    boolean bool = convertBool(element);
+    boolean bool = true;
 
     if(bool){
       this.ifPart.eval(memory);

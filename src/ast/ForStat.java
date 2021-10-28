@@ -28,7 +28,7 @@ public class ForStat extends Stat{
   }
 
   @Override
-  public void eval(Map<String, Integer> memory) {
+  public void eval(Map<String, Object> memory) {
     int firstValue = (int) first.eval(memory);
     int secondValue = (int) second.eval(memory);
     for (int i = firstValue; i < secondValue; i++) {
