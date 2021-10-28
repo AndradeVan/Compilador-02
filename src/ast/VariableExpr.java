@@ -17,6 +17,11 @@ public class VariableExpr extends Expr{
   }
 
   @Override
+  public Type getTypetoString() {
+    return v.getType();
+  }
+
+  @Override
   public Object eval(Map<String, Object> memory) {
     Object valueVariable = memory.get(v.getName());
     return valueVariable;

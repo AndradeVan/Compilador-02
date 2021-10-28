@@ -17,9 +17,14 @@ public class StringExpr extends Expr{
   }
 
   @Override
+  public Type getTypetoString() {
+    return Type.stringType;
+  }
+
+  @Override
   public void genC(PrintWriter pw) {
 
-    pw.print("\"" +value + "\"");
+    pw.print(value);
   }
 
   @Override

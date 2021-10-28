@@ -43,6 +43,12 @@ public class CompositeExpr extends Expr{
    return Type.stringType;
   }
 
+  //Utilizando só para verificar operadores com string
+  @Override
+  public Type getTypetoString() {
+    return Type.stringType;
+  }
+
   @Override
   public void genC(PrintWriter pw) {
 
@@ -65,28 +71,63 @@ public class CompositeExpr extends Expr{
           pw.print(" * ");
           break;
         case LT:
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           pw.print(" < ");
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           break;
         case LE:
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           pw.print(" <= ");
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           break;
         case GT:
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           pw.print(" > ");
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           break;
         case GE:
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           pw.print(" >= ");
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           break;
         case NEQ:
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           pw.print(" != ");
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           break;
         case EQ:
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           pw.print(" == ");
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           break;
         case AND:
           pw.print(" && ");
           break;
         case PLUSPLUS:
-
           break;
         case OR:
           pw.print(" || ");
@@ -107,26 +148,26 @@ public class CompositeExpr extends Expr{
       return (Integer) left.eval(memory) / (Integer) right.eval(memory);
     } else if (op == Symbol.REMAINDER) {
       return (Integer) left.eval(memory) % (Integer) right.eval(memory);
-    } else if (op == Symbol.LT) {
-      if (left.getType() == Type.booleanType && right.getType() == Type.booleanType) {
-        //errado
-        if ((Integer) left.eval(memory) < (Integer) right.eval(memory)) {
-          return "true";
-        }
-      } else if (left.getType() == Type.intType && right.getType() == Type.intType) {
+    }
+
+    else if (op == Symbol.LT) {
+      if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
+        return verificarString((String) left.eval(memory), (String) right.eval(memory), op);
+      }else {
         if ((Integer) left.eval(memory) < (Integer) right.eval(memory)) {
           return 1;
         }
-      } else if (left.getType() == Type.stringType && right.getType() == Type.stringType) {
-        if ((Integer) left.eval(memory) < (Integer) right.eval(memory)) {
-          return "teste";
-        }
+        return 0;
       }
     }else if (op == Symbol.GT) {
-      if( (Integer) left.eval(memory) > (Integer) right.eval(memory)) {
-        return 1;
+      if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
+        return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
+      }else {
+        if ((Integer) left.eval(memory) > (Integer) right.eval(memory)) {
+          return 1;
+        }
+        return 0;
       }
-      return 0;
     }else if (op == Symbol.LE) {
       if( (Integer) left.eval(memory) <= (Integer) right.eval(memory)) {
         return 1;
@@ -137,37 +178,89 @@ public class CompositeExpr extends Expr{
         return 1;
       }
       return 0;
-    } else if (op == Symbol.EQ) {
-      //verificar string
-      //int test = left.eval(memory);
-      if(left.getType() == Type.stringType && right.getType() == Type.stringType){
-        if( left.eval(memory) == right.eval(memory)) {
+    }else if (op == Symbol.EQ) {
+      if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
+        return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
+      }else {
+        if (left.eval(memory) == right.eval(memory)) {
           return 1;
         }
+        return 0;
       }
 
-      return 0;
     } else if (op == Symbol.NEQ) {
-      if( left.eval(memory) != right.eval(memory)) {
-        return 1;
+      if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
+        return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
+      }else {
+        if (left.eval(memory) != right.eval(memory)) {
+          return 1;
+        }
+        return 0;
       }
-      return 0;
-    }else if(op == Symbol.AND) {
+    }
+
+    else if(op == Symbol.AND) {
       if(left.eval(memory) == right.eval(memory)) {
         return 1;
       }else {
         return 0;
       }
-
     }else if(op == Symbol.OR) {
       boolean element = convertBoolOr( (Integer) left.eval(memory),(Integer) right.eval(memory));
       if(element == true)
         return 1;
       else
         return 0;
+    }else if(op == Symbol.PLUSPLUS) {
+      String leftValue = (String) left.eval(memory).toString();
+      String rightValue = (String) right.eval(memory).toString();
+
+      String valueConcat = leftValue.concat(rightValue);
+
+     return valueConcat;
     }
     else{
       throw new RuntimeException("Erro interno em CompositeExpr.");
+    }
+
+  }
+
+  private int verificarString(String left, String right, Symbol op) {
+    //<
+    if(op == Symbol.LT) {
+      if(left.compareTo(right) < 0) {
+        return 1;
+      }
+      return 0;
+    }
+    // >
+    else if(op == Symbol.GT){
+      if(left.compareTo(right) > 0) {
+        return 1;
+      }
+      return 0;
+    }
+    // >=
+    else if (op == Symbol.GE) {
+
+    }
+    // <=
+    else if(op == Symbol.LE) {
+
+    }
+    else if(op == Symbol.EQ) {
+      if(left.equals(right)) {
+        return 1;
+      }else{
+        return 0;
+      }
+    }
+    else if(op == Symbol.NEQ) {
+      if (!left.equals(right)) {
+        return 1;
+      } else {
+        return 0;
+      }
     }
     return 0;
   }

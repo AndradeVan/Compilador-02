@@ -17,6 +17,11 @@ public class NumberExpr extends Expr{
     return Type.intType;
   }
 
+  @Override
+  public Type getTypetoString() {
+    return Type.intType;
+  }
+
 
   @Override
   public void genC(PrintWriter pw) {
@@ -25,6 +30,6 @@ public class NumberExpr extends Expr{
 
   @Override
   public Object eval(Map<String, Object> memory) {
-    return (int) value;
+    return value;
   }
 }

@@ -2,13 +2,26 @@ package main;
 
 /*TODO
 
-  - Ajustar aspas duplas inves de aspa simples
-
   - Criar eval
     - print e println podem imprimir valores de todos os tipos. Para true booleano, deve ser impresso true mesmo. Idem para false.
-    - como retornar uma string, boolean no print
 
-
+  - Ajustar o GenC para plusplus e plus plus
+  - Eval
+    - for ok
+    - if ok
+    - while ok, mas podemos conferir com ++
+    - prints
+      - Ajustr o retorno, imprimir o valor(false or true) inves de 0 ou 1
+    - composite
+      - int ok
+      - boolean
+      - String
+        - Operadores > < >= <= == e !=
+        - Quais foram: > < == e !=
+    - unary
+      - int
+      - boolean
+    - varListStat
  */
 
 
@@ -24,11 +37,21 @@ public class Main {
 
     char []input = ("var Int n; "
             + "var String a;"
-            + "a = \"teste\"; "
+            + "var Boolean i;"
+            + "var Int soma;"
+            + "a = \"teste\" ++ 1 ++ false; "
+            + "soma = 0;"
+            + "i = false;"
             + "n = 2 + 4 - 6;"
+            + "println \"O valor do boolean é: \" ++ i;"
             + "\r\n"
-            + "print \"valor de a:\" ++ a ++ n;\r\n"
-            + "//print \"true = \" ++ (false < true);\r\n"
+            + "println \"valor da soma = \" ++ soma;\r\n"
+            + "if \"abc\" != \"cda\" {"
+            + "println \"Um valor qualquer\" ++ a;"
+            + "}else{"
+            + "println \"Valor do else\" ++ a;"
+            +"}\r\n"
+            //+ "println \"true = \" ++ (\"abc\" < \"cba\");\r\n"
     ).toCharArray();
     /*char []input = (" var Int n;"
             + "n = 100;\r\n"

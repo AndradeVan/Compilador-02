@@ -20,6 +20,11 @@ public class UnaryExpr extends Expr{
   }
 
   @Override
+  public Type getTypetoString() {
+    return expr.getType();
+  }
+
+  @Override
   public void genC(PrintWriter pw) {
     switch(op) {
       case PLUS:
