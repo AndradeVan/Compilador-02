@@ -3,24 +3,26 @@ package main;
 /*TODO
 
   - Criar eval
-    - print e println podem imprimir valores de todos os tipos. Para true booleano, deve ser impresso true mesmo. Idem para false.
 
-  - Ajustar o GenC para plusplus e plus plus
+  - Ajustar o GenC
+    plus plus
+
   - Eval
     - for ok
     - if ok
     - while ok, mas podemos conferir com ++
     - prints
-      - Ajustr o retorno, imprimir o valor(false or true) inves de 0 ou 1
     - composite
       - int ok
       - boolean
-      - String
+        - Operadores > < >= <= == != and e or -> And e Or não entendi muito bem como podemos tratar
+        - Quais foram: > < >= <= == !=
+      - String ok
         - Operadores > < >= <= == e !=
-        - Quais foram: > < == e !=
+        - Quais foram: > < == e != >= <=
     - unary
-      - int
-      - boolean
+      - Operadores + - e ! ---> Verificar --- e +++
+      - Quais foram: !
     - varListStat
  */
 
@@ -35,9 +37,10 @@ public class Main {
   public static void main(String []args){
 
 
-    char []input = ("var Int n; "
+    /*char []input = ("var Int n; "
             + "var String a;"
-            + "var Boolean i;"
+            + "var Int valor;"
+            /*+ "var Boolean i;"
             + "var Int soma;"
             + "a = \"teste\" ++ 1 ++ false; "
             + "soma = 0;"
@@ -46,14 +49,16 @@ public class Main {
             + "println \"O valor do boolean é: \" ++ i;"
             + "\r\n"
             + "println \"valor da soma = \" ++ soma;\r\n"
-            + "if \"abc\" != \"cda\" {"
-            + "println \"Um valor qualquer\" ++ a;"
+            + "n = 1;"
+            + "println valor;"
+            + "if \"abc\" >= \"abc\" {"
+            + "println \"Um valor qualquer\";"
             + "}else{"
-            + "println \"Valor do else\" ++ a;"
+            + "println \"Valor do else\";"
             +"}\r\n"
-            //+ "println \"true = \" ++ (\"abc\" < \"cba\");\r\n"
-    ).toCharArray();
-    /*char []input = (" var Int n;"
+            + "println \"true = \" ++ (\"abc\" < \"cba\");\r\n"
+    ).toCharArray();*/
+    char []input = (" var Int n;"
             + "n = 100;\r\n"
             + "var Int soma; \r\n"
             + "soma = 0; \r\n"
@@ -82,35 +87,35 @@ public class Main {
             + "   somaFor = somaFor + quad;"
             + " }"
             + "}\r\n"
-            + "println 'soma = ' ++ soma;"
-            + "println 'somaFor = ' ++ somaFor;"
+            + "println \"soma = \" ++ soma;"
+            + "println \"somaFor = \" ++ somaFor;"
             + "var Int num;"
             + "var String str;"
             + "var Boolean souVerd;"
             + "if soma == somaFor {"
             + " num = 0;"
             + " if num > 0 {"
-            + "   str = 'sou String';"
+            + "   str = \"sou String\";"
             + "   for cont in 1..5 {"
             + "     souVerd = true;"
-            + "     println 'O valor dessa porra é = ' ++ (souVerd ++ ' ') ++ cont;"
+            + "     println \"O valor dessa porra é = \" ++ (souVerd ++ \" \") ++ cont;"
             + "   }"
-            + "   str = 'continuo String';"
-            + "   println 'str = ' ++ str;"
+            + "   str = \"continuo String\";"
+            + "   println \"str = \" ++ str;"
             + " }"
             + " else {"
             + "   num = 1;"
-            + "   println 'num = ' ++ num;"
+            + "   println \"num = \" ++ num;"
             + " }"
-            + " println 'true = ' ++ (true >= false);"
+            + " println \"true = \" ++ (true >= false);"
             + "}"
             + "else {"
-            + " println 'Alguma coisa errada! Soma != SomaFor';"
-            + "}"
-            + "if 0 < 1 && ((true >= false && 'abc' < 'cba') && 'A' == 'A') {"
-            + " println 'Ufa, deu certo!';"
+            + " println \"Alguma coisa errada! Soma != SomaFor\";"
             + "}\r\n"
-            ).toCharArray();*/
+            //+ "if 0 < 1 && ((true >= false && \"abc\" < \"cba\") && \"A' == \"A\") {"
+            //+ " println \"Ufa, deu certo!\";"
+            //+ "}\r\n"
+            ).toCharArray();
 
 
     Compiler compiler = new Compiler();

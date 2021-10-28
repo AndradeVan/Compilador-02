@@ -169,13 +169,21 @@ public class CompositeExpr extends Expr{
         return 0;
       }
     }else if (op == Symbol.LE) {
-      if( (Integer) left.eval(memory) <= (Integer) right.eval(memory)) {
-        return 1;
+      if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
+        return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
+      }else {
+        if ((Integer) left.eval(memory) <= (Integer) right.eval(memory)) {
+          return 1;
+        }
       }
       return 0;
     } else if (op == Symbol.GE) {
-      if( (Integer) left.eval(memory) >= (Integer) right.eval(memory)) {
-        return 1;
+      if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
+        return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
+      }else {
+        if ((Integer) left.eval(memory) >= (Integer) right.eval(memory)) {
+          return 1;
+        }
       }
       return 0;
     }else if (op == Symbol.EQ) {
@@ -226,28 +234,21 @@ public class CompositeExpr extends Expr{
   }
 
   private int verificarString(String left, String right, Symbol op) {
-    //<
-    if(op == Symbol.LT) {
-      if(left.compareTo(right) < 0) {
+    //< || <=
+    if(op == Symbol.LT || op == Symbol.LE) {
+      if(left.compareTo(right) <= 0) {
         return 1;
       }
       return 0;
     }
-    // >
-    else if(op == Symbol.GT){
-      if(left.compareTo(right) > 0) {
+    // > || >=
+    else if(op == Symbol.GT || op == Symbol.GE){
+      if(left.compareTo(right) >= 0) {
         return 1;
       }
       return 0;
     }
-    // >=
-    else if (op == Symbol.GE) {
 
-    }
-    // <=
-    else if(op == Symbol.LE) {
-
-    }
     else if(op == Symbol.EQ) {
       if(left.equals(right)) {
         return 1;

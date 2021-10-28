@@ -26,7 +26,7 @@ public class BooleanExpr extends Expr{
   @Override
   public void genC(PrintWriter pw) {
 
-    pw.print( value ? "1" : "0" );
+    pw.print( value ? "true" : "false" );
   }
 
   @Override
