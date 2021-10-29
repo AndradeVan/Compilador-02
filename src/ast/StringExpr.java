@@ -24,7 +24,7 @@ public class StringExpr extends Expr{
   @Override
   public void genC(PrintWriter pw) {
 
-    pw.print("\""+ value + "\"");
+    pw.print(value);
   }
 
   @Override

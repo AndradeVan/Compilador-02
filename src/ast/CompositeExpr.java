@@ -43,7 +43,7 @@ public class CompositeExpr extends Expr{
    return Type.stringType;
   }
 
-  //Utilizando só para verificar operadores com string
+  //Utilizando sï¿½ para verificar operadores com string
   @Override
   public Type getTypetoString() {
     return Type.stringType;
@@ -52,7 +52,14 @@ public class CompositeExpr extends Expr{
   @Override
   public void genC(PrintWriter pw) {
 
-      left.genC(pw);
+	  if(left.getClass() == CompositeExpr.class) {
+		  left.genC(pw);
+	  } else if(left.getTypetoString() == Type.stringType){
+		  pw.print("\"");
+		  left.genC(pw);
+	  } else {
+		  left.genC(pw);
+	  }
 
       switch (op) {
         case PLUS:
@@ -71,46 +78,58 @@ public class CompositeExpr extends Expr{
           pw.print(" * ");
           break;
         case LT:
-          if(left.getTypetoString() == Type.stringType) {
-          }
+           if(left.getTypetoString() == Type.stringType) {
+             pw.print("\"");
+           }
           pw.print(" < ");
-          if(left.getTypetoString() == Type.stringType) {
-          }
+          // if(right.getTypetoString() == Type.stringType) {
+          //   pw.print("\"");
+          // }
           break;
         case LE:
-          if(left.getTypetoString() == Type.stringType) {
-          }
+           if(left.getTypetoString() == Type.stringType) {
+             pw.print("\"");
+           }
           pw.print(" <= ");
-          if(left.getTypetoString() == Type.stringType) {
-          }
+          // if(right.getTypetoString() == Type.stringType) {
+          //   pw.print("\"");
+          // }
           break;
         case GT:
-          if(left.getTypetoString() == Type.stringType) {
-          }
+           if(left.getTypetoString() == Type.stringType) {
+             pw.print("\"");
+           }
           pw.print(" > ");
-          if(left.getTypetoString() == Type.stringType) {
-          }
+          // if(right.getTypetoString() == Type.stringType) {
+          //   pw.print("\"");
+          // }
           break;
         case GE:
-          if(left.getTypetoString() == Type.stringType) {
-          }
+           if(left.getTypetoString() == Type.stringType) {
+             pw.print("\"");
+           }
           pw.print(" >= ");
-          if(left.getTypetoString() == Type.stringType) {
-          }
+          // if(right.getTypetoString() == Type.stringType) {
+          //   pw.print("\"");
+          // }
           break;
         case NEQ:
-          if(left.getTypetoString() == Type.stringType) {
-          }
+           if(left.getTypetoString() == Type.stringType) {
+             pw.print("\"");
+           }
           pw.print(" != ");
-          if(left.getTypetoString() == Type.stringType) {
-          }
+          // if(right.getTypetoString() == Type.stringType) {
+          //   pw.print("\"");
+          // }
           break;
         case EQ:
           if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
           }
           pw.print(" == ");
-          if(left.getTypetoString() == Type.stringType) {
-          }
+          // if(right.getTypetoString() == Type.stringType) {
+          //   pw.print("\"");
+          // }
           break;
         case AND:
           pw.print(" && ");
@@ -121,7 +140,26 @@ public class CompositeExpr extends Expr{
           pw.print(" || ");
           break;
       }
-    right.genC(pw);
+//    right.genC(pw);
+      if(right.getClass() == CompositeExpr.class) {
+		  right.genC(pw);
+	  } else if (right.getTypetoString() == Type.stringType) {
+		  pw.print("\"");
+		  right.genC(pw);
+		  pw.print("\"");
+	  } else {
+		  right.genC(pw); 
+	  }
+  }
+
+  private void formatExpr(PrintWriter pw, Expr expr) {
+    if(expr.getTypetoString() == Type.stringType) {
+      pw.print("\"");
+      expr.genC(pw);
+      pw.print("\"");
+    } else {
+      expr.genC(pw);
+    }
   }
 
   @Override
