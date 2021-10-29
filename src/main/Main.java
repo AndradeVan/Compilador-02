@@ -2,13 +2,28 @@ package main;
 
 /*TODO
 
-  - Ajustar aspas duplas inves de aspa simples
-
   - Criar eval
-    - print e println podem imprimir valores de todos os tipos. Para true booleano, deve ser impresso true mesmo. Idem para false.
-    - como retornar uma string, boolean no print
 
+  - Ajustar o GenC
+    plus plus
 
+  - Eval
+    - for ok
+    - if ok
+    - while ok, mas podemos conferir com ++
+    - prints
+    - composite
+      - int ok
+      - boolean
+        - Operadores > < >= <= == != and e or -> And e Or nï¿½o entendi muito bem como podemos tratar
+        - Quais foram: > < >= <= == !=
+      - String ok
+        - Operadores > < >= <= == e !=
+        - Quais foram: > < == e != >= <=
+    - unary
+      - Operadores + - e ! ---> Verificar --- e +++
+      - Quais foram: !
+    - varListStat
  */
 
 
@@ -20,16 +35,42 @@ import java.util.Map;
 
 public class Main {
   public static void main(String []args){
+    char []input = ("var Int n; \r\n"
+                    + "var String a; \r\n"
+                    + "var Int valor; \r\n"
+                    + "var Boolean i; \r\n"
+                    + "var Int soma; \r\n"
+                    + "n = 0; \r\n"
+                    + "a = \"testeAAAAAA\" ++ 1 ++ false; \r\n"
+                    + "if n > 0 && \"abc\" > \"cda\" {"
+                    + "println \"teste\"; \r\n"
+                    + "}\r\n"
+                    + "if 0 < 1 && ((true >= false && \"abc\" < \"cba\") && \"A\" == \"A\") { \r\n"
+                    + "println \"Ufa, deu certo!\";"
+                    +"}\r\n").toCharArray();
 
 
-    char []input = ("var Int n; "
+    /*char []input = ("var Int n; "
             + "var String a;"
-            + "a = \"teste\"; "
+            + "var Int valor;"
+            /*+ "var Boolean i;"
+            + "var Int soma;"
+            + "a = \"teste\" ++ 1 ++ false; "
+            + "soma = 0;"
+            + "i = false;"
             + "n = 2 + 4 - 6;"
+            + "println \"O valor do boolean ï¿½: \" ++ i;"
             + "\r\n"
-            + "print \"valor de a:\" ++ a ++ n;\r\n"
-            + "//print \"true = \" ++ (false < true);\r\n"
-    ).toCharArray();
+            + "println \"valor da soma = \" ++ soma;\r\n"
+            + "n = 1;"
+            + "println valor;"
+            + "if \"abc\" >= \"abc\" {"
+            + "println \"Um valor qualquer\";"
+            + "}else{"
+            + "println \"Valor do else\";"
+            +"}\r\n"
+            + "println \"true = \" ++ (\"abc\" < \"cba\");\r\n"
+    ).toCharArray();*/
     /*char []input = (" var Int n;"
             + "n = 100;\r\n"
             + "var Int soma; \r\n"
@@ -59,34 +100,34 @@ public class Main {
             + "   somaFor = somaFor + quad;"
             + " }"
             + "}\r\n"
-            + "println 'soma = ' ++ soma;"
-            + "println 'somaFor = ' ++ somaFor;"
+            + "println \"soma = \" ++ soma;"
+            + "println \"somaFor = \" ++ somaFor;"
             + "var Int num;"
             + "var String str;"
             + "var Boolean souVerd;"
             + "if soma == somaFor {"
             + " num = 0;"
             + " if num > 0 {"
-            + "   str = 'sou String';"
+            + "   str = \"sou String\";"
             + "   for cont in 1..5 {"
             + "     souVerd = true;"
-            + "     println 'O valor dessa porra é = ' ++ (souVerd ++ ' ') ++ cont;"
+            + "     println \"O valor dessa porra ï¿½ = \" ++ (souVerd ++ \" \") ++ cont;"
             + "   }"
-            + "   str = 'continuo String';"
-            + "   println 'str = ' ++ str;"
+            + "   str = \"continuo String\";"
+            + "   println \"str = \" ++ str;"
             + " }"
             + " else {"
             + "   num = 1;"
-            + "   println 'num = ' ++ num;"
+            + "   println \"num = \" ++ num;"
             + " }"
-            + " println 'true = ' ++ (true >= false);"
+            + " println \"true = \" ++ (true >= false);"
             + "}"
             + "else {"
-            + " println 'Alguma coisa errada! Soma != SomaFor';"
-            + "}"
-            + "if 0 < 1 && ((true >= false && 'abc' < 'cba') && 'A' == 'A') {"
-            + " println 'Ufa, deu certo!';"
+            + " println \"Alguma coisa errada! Soma != SomaFor\";"
             + "}\r\n"
+            //+ "if 0 < 1 && ((true >= false && \"abc\" < \"cba\") && \"A' == \"A\") {"
+            //+ " println \"Ufa, deu certo!\";"
+            //+ "}\r\n"
             ).toCharArray();*/
 
 

@@ -17,6 +17,11 @@ public class NullTypeString extends Expr{
     return null;
   }
 
+  @Override
+  public Type getTypetoString() {
+    return null;
+  }
+
 
   @Override
   public void genC(PrintWriter pw) {

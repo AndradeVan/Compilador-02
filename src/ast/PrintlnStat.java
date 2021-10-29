@@ -31,7 +31,7 @@ public class PrintlnStat extends Stat{
 			}
 		}
 
-		pw.print("\"");
+		pw.print("\\n\"");
 
 		for (Expr r : expr) {
 
@@ -104,11 +104,10 @@ public class PrintlnStat extends Stat{
   @Override
   public void eval(Map<String, Object> memory) {
 		for(Expr stat : expr){
-			if(stat.getType() != null)
-				System.out.print(" "+ stat.eval(memory));
-			else
-				System.out.print(stat.eval(memory));
+			System.out.print(stat.eval(memory));
+			System.out.print(" ");
 		}
+		System.out.println("");
   }
 
 }

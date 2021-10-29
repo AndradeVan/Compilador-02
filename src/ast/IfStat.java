@@ -17,7 +17,11 @@ public class IfStat extends Stat{
   @Override
   public void genC(PrintWriter pw){
     pw.print("if ( ");
+    // if(expr.getTypetoString() == Type.stringType)
+    //   pw.print("\"");
     expr.genC(pw);
+    // if(expr.getTypetoString() == Type.stringType)
+    //   pw.print("\"");
     pw.println(" ) {");
     ifPart.genC(pw);
     pw.println("}");
@@ -32,7 +36,7 @@ public class IfStat extends Stat{
   public void eval(Map<String, Object> memory) {
     Object element = expr.eval(memory);
 
-    boolean bool = true;
+    boolean bool = convertBool((Integer) element);
 
     if(bool){
       this.ifPart.eval(memory);

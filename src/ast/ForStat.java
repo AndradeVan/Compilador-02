@@ -31,7 +31,7 @@ public class ForStat extends Stat{
   public void eval(Map<String, Object> memory) {
     int firstValue = (int) first.eval(memory);
     int secondValue = (int) second.eval(memory);
-    for (int i = firstValue; i < secondValue; i++) {
+    for (int i = firstValue; i <= secondValue; i++) {
       memory.put("" + ident, i);
       statList.eval(memory);
     }

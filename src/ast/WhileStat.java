@@ -15,7 +15,11 @@ public class WhileStat extends Stat{
   @Override
   public void genC(PrintWriter pw) {
     pw.print("while (");
+    // if(expr.getType() == Type.stringType)
+    //   pw.print("\"");
     expr.genC(pw);
+    // if(expr.getType() == Type.stringType)
+    //   pw.print("\"");
     pw.println(") {");
     statList.genC(pw);
     pw.println("}");
@@ -24,11 +28,11 @@ public class WhileStat extends Stat{
   @Override
   public void eval(Map<String, Object> memory) {
     Object element = expr.eval(memory);
-    boolean bool = convertBool(1);
+    boolean bool = convertBool((Integer) element);
     while(bool) {
       statList.eval(memory);
       element = expr.eval(memory);
-      bool = convertBool(1);
+      bool = convertBool((Integer) element);
     }
   }
 

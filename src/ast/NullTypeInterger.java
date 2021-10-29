@@ -19,6 +19,11 @@ public class NullTypeInterger extends Expr{
   }
 
   @Override
+  public Type getTypetoString() {
+    return null;
+  }
+
+  @Override
   public void genC(PrintWriter pw) {
       pw.print(value);
     }

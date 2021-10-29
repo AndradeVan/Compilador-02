@@ -43,10 +43,26 @@ public class CompositeExpr extends Expr{
    return Type.stringType;
   }
 
+  //Utilizando s� para verificar operadores com string
+  @Override
+  public Type getTypetoString() {
+    return Type.stringType;
+  }
+
   @Override
   public void genC(PrintWriter pw) {
 
-      left.genC(pw);
+	  if(left.getClass() == CompositeExpr.class) {
+		  left.genC(pw);
+	  } else if(left.getTypetoString() == Type.stringType){
+		  pw.print("\"");
+		  left.genC(pw);
+//		  pw.print("\"");
+	  } else {
+		  left.genC(pw);
+	  }
+	  
+      
 
       switch (op) {
         case PLUS:
@@ -65,34 +81,88 @@ public class CompositeExpr extends Expr{
           pw.print(" * ");
           break;
         case LT:
+           if(left.getTypetoString() == Type.stringType) {
+             pw.print("\"");
+           }
           pw.print(" < ");
+          // if(right.getTypetoString() == Type.stringType) {
+          //   pw.print("\"");
+          // }
           break;
         case LE:
+           if(left.getTypetoString() == Type.stringType) {
+             pw.print("\"");
+           }
           pw.print(" <= ");
+          // if(right.getTypetoString() == Type.stringType) {
+          //   pw.print("\"");
+          // }
           break;
         case GT:
+           if(left.getTypetoString() == Type.stringType) {
+             pw.print("\"");
+           }
           pw.print(" > ");
+          // if(right.getTypetoString() == Type.stringType) {
+          //   pw.print("\"");
+          // }
           break;
         case GE:
+           if(left.getTypetoString() == Type.stringType) {
+             pw.print("\"");
+           }
           pw.print(" >= ");
+          // if(right.getTypetoString() == Type.stringType) {
+          //   pw.print("\"");
+          // }
           break;
         case NEQ:
+           if(left.getTypetoString() == Type.stringType) {
+             pw.print("\"");
+           }
           pw.print(" != ");
+          // if(right.getTypetoString() == Type.stringType) {
+          //   pw.print("\"");
+          // }
           break;
         case EQ:
+          if(left.getTypetoString() == Type.stringType) {
+            pw.print("\"");
+          }
           pw.print(" == ");
+          // if(right.getTypetoString() == Type.stringType) {
+          //   pw.print("\"");
+          // }
           break;
         case AND:
           pw.print(" && ");
           break;
         case PLUSPLUS:
-
           break;
         case OR:
           pw.print(" || ");
           break;
       }
-    right.genC(pw);
+//    right.genC(pw);
+      if(right.getClass() == CompositeExpr.class) {
+		  right.genC(pw);
+	  } else if (right.getTypetoString() == Type.stringType) {
+		  pw.print("\"");
+		  right.genC(pw);
+		  pw.print("\"");
+	  } else {
+		  right.genC(pw); 
+	  }
+  }
+
+  private void formatExpr(PrintWriter pw, Expr expr) {
+    if(expr.getTypetoString() == Type.stringType) {
+      pw.print("\"");
+      expr.genC(pw);
+      pw.print("\"");
+    } else {
+      expr.genC(pw);
+    }
   }
 
   @Override
@@ -107,67 +177,120 @@ public class CompositeExpr extends Expr{
       return (Integer) left.eval(memory) / (Integer) right.eval(memory);
     } else if (op == Symbol.REMAINDER) {
       return (Integer) left.eval(memory) % (Integer) right.eval(memory);
-    } else if (op == Symbol.LT) {
-      if (left.getType() == Type.booleanType && right.getType() == Type.booleanType) {
-        //errado
-        if ((Integer) left.eval(memory) < (Integer) right.eval(memory)) {
-          return "true";
-        }
-      } else if (left.getType() == Type.intType && right.getType() == Type.intType) {
+    }
+
+    else if (op == Symbol.LT) {
+      if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
+        return verificarString((String) left.eval(memory), (String) right.eval(memory), op);
+      }else {
         if ((Integer) left.eval(memory) < (Integer) right.eval(memory)) {
           return 1;
         }
-      } else if (left.getType() == Type.stringType && right.getType() == Type.stringType) {
-        if ((Integer) left.eval(memory) < (Integer) right.eval(memory)) {
-          return "teste";
-        }
+        return 0;
       }
     }else if (op == Symbol.GT) {
-      if( (Integer) left.eval(memory) > (Integer) right.eval(memory)) {
-        return 1;
+      if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
+        return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
+      }else {
+        if ((Integer) left.eval(memory) > (Integer) right.eval(memory)) {
+          return 1;
+        }
+        return 0;
       }
-      return 0;
     }else if (op == Symbol.LE) {
-      if( (Integer) left.eval(memory) <= (Integer) right.eval(memory)) {
-        return 1;
+      if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
+        return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
+      }else {
+        if ((Integer) left.eval(memory) <= (Integer) right.eval(memory)) {
+          return 1;
+        }
       }
       return 0;
     } else if (op == Symbol.GE) {
-      if( (Integer) left.eval(memory) >= (Integer) right.eval(memory)) {
-        return 1;
-      }
-      return 0;
-    } else if (op == Symbol.EQ) {
-      //verificar string
-      //int test = left.eval(memory);
-      if(left.getType() == Type.stringType && right.getType() == Type.stringType){
-        if( left.eval(memory) == right.eval(memory)) {
+      if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
+        return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
+      }else {
+        if ((Integer) left.eval(memory) >= (Integer) right.eval(memory)) {
           return 1;
         }
       }
-
       return 0;
-    } else if (op == Symbol.NEQ) {
-      if( left.eval(memory) != right.eval(memory)) {
-        return 1;
+    }else if (op == Symbol.EQ) {
+      if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
+        return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
+      }else {
+        if (left.eval(memory) == right.eval(memory)) {
+          return 1;
+        }
+        return 0;
       }
-      return 0;
-    }else if(op == Symbol.AND) {
+
+    } else if (op == Symbol.NEQ) {
+      if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
+        return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
+      }else {
+        if (left.eval(memory) != right.eval(memory)) {
+          return 1;
+        }
+        return 0;
+      }
+    }
+
+    else if(op == Symbol.AND) {
       if(left.eval(memory) == right.eval(memory)) {
         return 1;
       }else {
         return 0;
       }
-
     }else if(op == Symbol.OR) {
       boolean element = convertBoolOr( (Integer) left.eval(memory),(Integer) right.eval(memory));
       if(element == true)
         return 1;
       else
         return 0;
+    }else if(op == Symbol.PLUSPLUS) {
+      String leftValue = (String) left.eval(memory).toString();
+      String rightValue = (String) right.eval(memory).toString();
+
+      String valueConcat = leftValue.concat(rightValue);
+
+     return valueConcat;
     }
     else{
       throw new RuntimeException("Erro interno em CompositeExpr.");
+    }
+
+  }
+
+  private int verificarString(String left, String right, Symbol op) {
+    //< || <=
+    if(op == Symbol.LT || op == Symbol.LE) {
+      if(left.compareTo(right) <= 0) {
+        return 1;
+      }
+      return 0;
+    }
+    // > || >=
+    else if(op == Symbol.GT || op == Symbol.GE){
+      if(left.compareTo(right) >= 0) {
+        return 1;
+      }
+      return 0;
+    }
+
+    else if(op == Symbol.EQ) {
+      if(left.equals(right)) {
+        return 1;
+      }else{
+        return 0;
+      }
+    }
+    else if(op == Symbol.NEQ) {
+      if (!left.equals(right)) {
+        return 1;
+      } else {
+        return 0;
+      }
     }
     return 0;
   }
