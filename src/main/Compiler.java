@@ -14,12 +14,14 @@ public class Compiler {
   private Hashtable<String, Variable> symbolTable;
   private Hashtable<String, Type> typeVar;
   private ArrayList<Symbol> symbolToken;
+  private int count;
 
   public Program compile(char []input){
     lexer = new Lexer(input);
     symbolTable = new Hashtable<>();
     typeVar = new Hashtable<>();
     symbolToken = new ArrayList<Symbol>();
+    count = 0;
     lexer.nextToken();
 
     Program program = program();
@@ -385,7 +387,7 @@ public class Compiler {
           System.out.println("Variavel tem que ser do tipo boolean para suportar o tipo !");
           System.exit(0);
         }
-        return new UnaryExpr(e, Symbol.NOT);
+        return new UnaryExpr(e, Symbol.NOT,0);
       case PLUS:
         lexer.nextToken();
         e = expr();
@@ -393,15 +395,16 @@ public class Compiler {
           System.out.println("Variavel tem que ser do tipo int para suportar o tipo +");
           System.exit(0);
         }
-        return new UnaryExpr(e, Symbol.PLUS);
+        return new UnaryExpr(e, Symbol.PLUS,0);
       case MINUS:
+        count++;
         lexer.nextToken();
         e = expr();
         if( e.getType() != Type.intType){
           System.out.println("Variavel tem que ser do tipo int para suportar o tipo -");
           System.exit(0);
         }
-        return new UnaryExpr(e, Symbol.MINUS);
+        return new UnaryExpr(e, Symbol.MINUS, count);
       case LEFTPAR:
         lexer.nextToken();
         e = expr();

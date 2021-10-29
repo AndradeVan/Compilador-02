@@ -6,6 +6,7 @@ public enum Symbol {
   VAR,
   TYPENULL,
   IDENT,
+  MINUSMINUS,
   Type,
   Boolean,
   String,

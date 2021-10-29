@@ -34,24 +34,24 @@ import java.util.Map;
 
 public class Main {
   public static void main(String []args){
-    char []input = ("var Int n; \r\n"
+    /*char []input = ("var Int n; \r\n"
                     // + "var String a; \r\n"
                     + "var Int valor; \r\n"
+                    + "valor = 2;"
                     // + "var Boolean i; \r\n"
                     // + "var Int soma; \r\n"
-                    + "n = 171700; \r\n"
+                    //+ "n = 171700; \r\n"
                     // + "a = \"testeAAAAAA\" ++ 1 ++ false; \r\n"
                     // + "if n > 0 && \"abc\" > \"cda\" {"
-                    + "valor = 171700;\r\n"
+                    + "n = (--valor) + 2;\r\n"
                     // + "println \"teste\"; \r\n"
                     // + "}\r\n"
                     // + "if 0 < 1 && ((true >= false && \"abc\" < \"cba\") && \"A\" == \"A\") { \r\n"
                     // + "println \"Ufa, deu certo!\";"
-                    + "if n == valor {"
-                    + "println \"oi\";"
-                    +"}\r\n").toCharArray();
-    /*char []input = (" var Int n;"
->>>>>>> b04681ff7533dcc8971e9a56a20b0c94680e98ec
+                    //+ "if n == valor {"
+                    + "println n;"
+                    +"\r\n").toCharArray();*/
+    char []input = (" var Int n;"
             + "n = 100;\r\n"
             + "var Int soma; \r\n"
             + "soma = 0; \r\n"
@@ -109,7 +109,7 @@ public class Main {
             + " println \"Ufa, deu certo!\";"
             + "}\r\n"
 
-            ).toCharArray();*/
+            ).toCharArray();
 
 
     Compiler compiler = new Compiler();

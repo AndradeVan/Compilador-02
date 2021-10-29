@@ -8,10 +8,12 @@ import java.util.Map;
 public class UnaryExpr extends Expr{
   private Expr expr;
   private Symbol op;
+  private int count;
 
-  public UnaryExpr(Expr expr, Symbol op){
+  public UnaryExpr(Expr expr, Symbol op, int count){
     this.expr = expr;
     this.op = op;
+    this.count = count;
   }
 
   @Override
@@ -31,7 +33,10 @@ public class UnaryExpr extends Expr{
         pw.print("+");
         break;
       case MINUS:
-        pw.print("-");
+        if(count % 2 == 0){
+          pw.print("");
+        }else
+          pw.print("-");
         break;
       case NOT:
         pw.print("!");
@@ -48,7 +53,8 @@ public class UnaryExpr extends Expr{
       return valeuMinus * ((Integer) expr.eval(memory));
     }else if (op == Symbol.PLUS) {
       return valuePlus * (Integer) expr.eval(memory);
-    }else if (op == Symbol.NOT) {
+    }
+    else if (op == Symbol.NOT) {
       if (valeuMinus * (Integer) expr.eval(memory) != (Integer) expr.eval(memory)) {
         return 0;
       }else {

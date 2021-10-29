@@ -22,6 +22,6 @@ public class VarListStat extends Stat{
 
   @Override
   public void eval(Map<String, Object> memory) {
-
+    memory.put("" + ident, type.getName());
   }
 }
