@@ -36,17 +36,20 @@ import java.util.Map;
 public class Main {
   public static void main(String []args){
     char []input = ("var Int n; \r\n"
-                    + "var String a; \r\n"
+                    // + "var String a; \r\n"
                     + "var Int valor; \r\n"
-                    + "var Boolean i; \r\n"
-                    + "var Int soma; \r\n"
-                    + "n = 0; \r\n"
-                    + "a = \"testeAAAAAA\" ++ 1 ++ false; \r\n"
-                    + "if n > 0 && \"abc\" > \"cda\" {"
-                    + "println \"teste\"; \r\n"
-                    + "}\r\n"
-                    + "if 0 < 1 && ((true >= false && \"abc\" < \"cba\") && \"A\" == \"A\") { \r\n"
-                    + "println \"Ufa, deu certo!\";"
+                    // + "var Boolean i; \r\n"
+                    // + "var Int soma; \r\n"
+                    + "n = 171700; \r\n"
+                    // + "a = \"testeAAAAAA\" ++ 1 ++ false; \r\n"
+                    // + "if n > 0 && \"abc\" > \"cda\" {"
+                    + "valor = 171700;\r\n"
+                    // + "println \"teste\"; \r\n"
+                    // + "}\r\n"
+                    // + "if 0 < 1 && ((true >= false && \"abc\" < \"cba\") && \"A\" == \"A\") { \r\n"
+                    // + "println \"Ufa, deu certo!\";"
+                    + "if n == valor {"
+                    + "println \"oi\";"
                     +"}\r\n").toCharArray();
 
 
