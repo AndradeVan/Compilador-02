@@ -17,11 +17,11 @@ public class IfStat extends Stat{
   @Override
   public void genC(PrintWriter pw){
     pw.print("if ( ");
-    if(expr.getTypetoString() == Type.stringType)
-      pw.print("\"");
+    // if(expr.getTypetoString() == Type.stringType)
+    //   pw.print("\"");
     expr.genC(pw);
-    if(expr.getTypetoString() == Type.stringType)
-      pw.print("\"");
+    // if(expr.getTypetoString() == Type.stringType)
+    //   pw.print("\"");
     pw.println(" ) {");
     ifPart.genC(pw);
     pw.println("}");
