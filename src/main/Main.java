@@ -14,16 +14,21 @@ import java.util.Map;
 
 public class Main {
   public static void main(String []args){
-   char []input = ("var Int num; \r\n"
+   /*char []input = ("var Int num; \r\n"
            + "var String str;"
            + "var String teste;"
-           + "str = \"valor\";"
-           + "teste = \"oi\" ++ false ++  \" \" ++ 1;"
-           + "if \"abc\" < \"cba\" {"
+           + "teste = \"oi\" ++ false ++ 1;"
+           + "num = 2;"
+           + " if num > 0 {"
+           + "   str = \"sou String\";"
+           + "   str = \"continuo String\";"
+           + "   println \"str = \" ++ str;"
+           + " }"
+           + "if 0 < 1 && ((true >= false && \"abc\" < \"cba\") && \"A\" == \"A\") {"
            + " println \"Ufa, deu certo!\";"
            + "}\r\n"
-           +"\r\n").toCharArray();
-    /*char []input = (" var Int n;"
+           +"\r\n").toCharArray(); */
+    char []input = (" var Int n;"
             + "n = 100;\r\n"
             + "var Int soma; \r\n"
             + "soma = 0; \r\n"
@@ -81,7 +86,7 @@ public class Main {
             + " println \"Ufa, deu certo!\";"
             + "}\r\n"
 
-            ).toCharArray();*/
+            ).toCharArray();
 
     Compiler compiler = new Compiler();
     Program program = compiler.compile(input);

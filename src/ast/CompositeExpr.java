@@ -53,7 +53,7 @@ public class CompositeExpr extends Expr{
 
 	  if(left.getClass() == CompositeExpr.class) {
 		  left.genC(pw);
-	  } else if(left.getTypetoString() == Type.stringType){
+	  } else if(left.getTypetoString() == Type.stringType && op != Symbol.PLUSPLUS){
 		  pw.print("\"");
 		  left.genC(pw);
 	  } else {
