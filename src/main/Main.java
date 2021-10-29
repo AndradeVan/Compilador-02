@@ -13,13 +13,8 @@ package main;
     - println
     - composite
       - int ok
-<<<<<<< HEAD
       - boolean ok
         - Operadores > < >= <= == != and e or
-=======
-      - boolean
-        - Operadores > < >= <= == != and e or -> And e Or n�o entendi muito bem como podemos tratar
->>>>>>> 173929510450da1fb4e0cde15fd97032cda4a802
         - Quais foram: > < >= <= == !=
       - String ok
         - Operadores > < >= <= == e !=
@@ -39,11 +34,24 @@ import java.util.Map;
 
 public class Main {
   public static void main(String []args){
-    /*char []input = ("var Int n; \r\n"
-            + "var Int soma; \r\n"
-            + " println \"true = \" ++ (true >= false);\r\n"
-            ).toCharArray();*/
-   char []input = (" var Int n;"
+    char []input = ("var Int n; \r\n"
+                    // + "var String a; \r\n"
+                    + "var Int valor; \r\n"
+                    // + "var Boolean i; \r\n"
+                    // + "var Int soma; \r\n"
+                    + "n = 171700; \r\n"
+                    // + "a = \"testeAAAAAA\" ++ 1 ++ false; \r\n"
+                    // + "if n > 0 && \"abc\" > \"cda\" {"
+                    + "valor = 171700;\r\n"
+                    // + "println \"teste\"; \r\n"
+                    // + "}\r\n"
+                    // + "if 0 < 1 && ((true >= false && \"abc\" < \"cba\") && \"A\" == \"A\") { \r\n"
+                    // + "println \"Ufa, deu certo!\";"
+                    + "if n == valor {"
+                    + "println \"oi\";"
+                    +"}\r\n").toCharArray();
+    /*char []input = (" var Int n;"
+>>>>>>> b04681ff7533dcc8971e9a56a20b0c94680e98ec
             + "n = 100;\r\n"
             + "var Int soma; \r\n"
             + "soma = 0; \r\n"
@@ -101,7 +109,7 @@ public class Main {
             + " println \"Ufa, deu certo!\";"
             + "}\r\n"
 
-            ).toCharArray();
+            ).toCharArray();*/
 
 
     Compiler compiler = new Compiler();
