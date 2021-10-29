@@ -72,56 +72,44 @@ public class CompositeExpr extends Expr{
           break;
         case LT:
           if(left.getTypetoString() == Type.stringType) {
-            pw.print("\"");
           }
           pw.print(" < ");
           if(left.getTypetoString() == Type.stringType) {
-            pw.print("\"");
           }
           break;
         case LE:
           if(left.getTypetoString() == Type.stringType) {
-            pw.print("\"");
           }
           pw.print(" <= ");
           if(left.getTypetoString() == Type.stringType) {
-            pw.print("\"");
           }
           break;
         case GT:
           if(left.getTypetoString() == Type.stringType) {
-            pw.print("\"");
           }
           pw.print(" > ");
           if(left.getTypetoString() == Type.stringType) {
-            pw.print("\"");
           }
           break;
         case GE:
           if(left.getTypetoString() == Type.stringType) {
-            pw.print("\"");
           }
           pw.print(" >= ");
           if(left.getTypetoString() == Type.stringType) {
-            pw.print("\"");
           }
           break;
         case NEQ:
           if(left.getTypetoString() == Type.stringType) {
-            pw.print("\"");
           }
           pw.print(" != ");
           if(left.getTypetoString() == Type.stringType) {
-            pw.print("\"");
           }
           break;
         case EQ:
           if(left.getTypetoString() == Type.stringType) {
-            pw.print("\"");
           }
           pw.print(" == ");
           if(left.getTypetoString() == Type.stringType) {
-            pw.print("\"");
           }
           break;
         case AND:
@@ -141,6 +129,8 @@ public class CompositeExpr extends Expr{
     if (op == Symbol.PLUS) {
       return (Integer) left.eval(memory) + (Integer) right.eval(memory);
     } else if (op == Symbol.MINUS) {
+      System.out.println("left -->" + left.eval(memory) );
+      System.out.println("right -->" + right.eval(memory) );
       return (Integer) left.eval(memory) - (Integer) right.eval(memory);
     } else if (op == Symbol.MULT) {
       return (Integer) left.eval(memory) * (Integer) right.eval(memory);
@@ -190,7 +180,9 @@ public class CompositeExpr extends Expr{
       if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
         return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
       }else {
-        if (left.eval(memory) == right.eval(memory)) {
+        System.out.println("Valooooor" + left.eval(memory));
+        System.out.println("Teste" + right.eval(memory));
+        if ((Integer) left.eval(memory) == (Integer) right.eval(memory)) {
           return 1;
         }
         return 0;
@@ -200,7 +192,7 @@ public class CompositeExpr extends Expr{
       if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
         return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
       }else {
-        if (left.eval(memory) != right.eval(memory)) {
+        if ((Integer) left.eval(memory) != (Integer) right.eval(memory)) {
           return 1;
         }
         return 0;
@@ -208,7 +200,8 @@ public class CompositeExpr extends Expr{
     }
 
     else if(op == Symbol.AND) {
-      if(left.eval(memory) == right.eval(memory)) {
+      boolean element = convertBoolAnd((Integer) left.eval(memory),(Integer) right.eval(memory));
+      if(element) {
         return 1;
       }else {
         return 0;
@@ -264,6 +257,14 @@ public class CompositeExpr extends Expr{
       }
     }
     return 0;
+  }
+
+  private boolean convertBoolAnd(int left, int right) {
+    if(left == 1 && right == 1) {
+      return true;
+    }else {
+      return false;
+    }
   }
 
   private boolean convertBoolOr(int left, int right) {
