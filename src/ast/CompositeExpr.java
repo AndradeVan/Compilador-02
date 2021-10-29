@@ -218,9 +218,8 @@ public class CompositeExpr extends Expr{
       if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
         return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
       }else {
-        System.out.println("Valooooor" + left.eval(memory));
-        System.out.println("Teste" + right.eval(memory));
-        if ((Integer) left.eval(memory) == (Integer) right.eval(memory)) {
+    	  
+        if (left.eval(memory).equals(right.eval(memory))) {
           return 1;
         }
         return 0;
