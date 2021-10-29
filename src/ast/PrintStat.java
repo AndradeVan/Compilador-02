@@ -50,7 +50,17 @@ public class PrintStat extends Stat{
   public void eval(Map<String, Object> memory) {
 
     for(Expr stat : expr){
-      System.out.print(stat.eval(memory));
+      String bool = (String) stat.eval(memory).toString();
+      if(stat.getType() == Type.booleanType) {
+        int convert = Integer.parseInt(bool);
+        if (convert == 1) {
+          System.out.print("true");
+        } else {
+          System.out.print("false");
+        }
+      }else{
+        System.out.print(stat.eval(memory));
+      }
       System.out.print(" ");
     }
   }

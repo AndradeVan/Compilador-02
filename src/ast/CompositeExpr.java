@@ -118,18 +118,13 @@ public class CompositeExpr extends Expr{
              pw.print("\"");
            }
           pw.print(" != ");
-          // if(right.getTypetoString() == Type.stringType) {
-          //   pw.print("\"");
-          // }
+
           break;
         case EQ:
           if(left.getTypetoString() == Type.stringType) {
             pw.print("\"");
           }
           pw.print(" == ");
-          // if(right.getTypetoString() == Type.stringType) {
-          //   pw.print("\"");
-          // }
           break;
         case AND:
           pw.print(" && ");
@@ -218,9 +213,9 @@ public class CompositeExpr extends Expr{
       if(left.getTypetoString() == Type.stringType && right.getTypetoString() == Type.stringType) {
         return verificarString((String) left.eval(memory), (String) right.eval(memory),op);
       }else {
-        System.out.println("Valooooor" + left.eval(memory));
-        System.out.println("Teste" + right.eval(memory));
-        if ((Integer) left.eval(memory) == (Integer) right.eval(memory)) {
+        int valueLeft = (Integer) left.eval(memory);
+        int valueRight = (Integer) right.eval(memory);
+        if (valueLeft == valueRight) {
           return 1;
         }
         return 0;

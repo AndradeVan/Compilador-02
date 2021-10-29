@@ -39,20 +39,11 @@ import java.util.Map;
 
 public class Main {
   public static void main(String []args){
-    char []input = ("var Int n; \r\n"
-                    + "var String a; \r\n"
-                    + "var Int valor; \r\n"
-                    + "var Boolean i; \r\n"
-                    + "var Int soma; \r\n"
-                    + "n = 0; \r\n"
-                    + "a = \"testeAAAAAA\" ++ 1 ++ false; \r\n"
-                    + "if n > 0 && \"abc\" > \"cda\" {"
-                    + "println \"teste\"; \r\n"
-                    + "}\r\n"
-                    + "if 0 < 1 && ((true >= false && \"abc\" < \"cba\") && \"A\" == \"A\") { \r\n"
-                    + "println \"Ufa, deu certo!\";"
-                    +"}\r\n").toCharArray();
-    /*char []input = (" var Int n;"
+    /*char []input = ("var Int n; \r\n"
+            + "var Int soma; \r\n"
+            + " println \"true = \" ++ (true >= false);\r\n"
+            ).toCharArray();*/
+   char []input = (" var Int n;"
             + "n = 100;\r\n"
             + "var Int soma; \r\n"
             + "soma = 0; \r\n"
@@ -92,7 +83,7 @@ public class Main {
             + "   str = \"sou String\";"
             + "   for cont in 1..5 {"
             + "     souVerd = true;"
-            + "     println \"O valor dessa porra � = \" ++ (souVerd ++ \" \") ++ cont;"
+            + "     println \"O valor dessa porra = \" ++ (souVerd ++ \" \") ++ cont;"
             + "   }"
             + "   str = \"continuo String\";"
             + "   println \"str = \" ++ str;"
@@ -106,16 +97,11 @@ public class Main {
             + "else {"
             + " println \"Alguma coisa errada! Soma != SomaFor\";"
             + "}\r\n"
-<<<<<<< HEAD
             + "if 0 < 1 && ((true >= false && \"abc\" < \"cba\") && \"A\" == \"A\") {"
             + " println \"Ufa, deu certo!\";"
             + "}\r\n"
-=======
-            //+ "if 0 < 1 && ((true >= false && \"abc\" < \"cba\") && \"A' == \"A\") {"
-            //+ " println \"Ufa, deu certo!\";"
-            //+ "}\r\n"
->>>>>>> 173929510450da1fb4e0cde15fd97032cda4a802
-            ).toCharArray();*/
+
+            ).toCharArray();
 
 
     Compiler compiler = new Compiler();
