@@ -15,11 +15,7 @@ public class WhileStat extends Stat{
   @Override
   public void genC(PrintWriter pw) {
     pw.print("while (");
-    // if(expr.getType() == Type.stringType)
-    //   pw.print("\"");
     expr.genC(pw);
-    // if(expr.getType() == Type.stringType)
-    //   pw.print("\"");
     pw.println(") {");
     statList.genC(pw);
     pw.println("}");

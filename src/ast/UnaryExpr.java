@@ -45,9 +45,9 @@ public class UnaryExpr extends Expr{
     int valeuMinus = -1;
     int valuePlus = 1;
     if (op == Symbol.MINUS){
-      return valeuMinus * (Integer) expr.eval(memory);
+      return valeuMinus * ((Integer) expr.eval(memory));
     }else if (op == Symbol.PLUS) {
-      return valuePlus * (Integer) expr.eval(memory) ;
+      return valuePlus * (Integer) expr.eval(memory);
     }else if (op == Symbol.NOT) {
       if (valeuMinus * (Integer) expr.eval(memory) != (Integer) expr.eval(memory)) {
         return 0;

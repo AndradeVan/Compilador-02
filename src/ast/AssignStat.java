@@ -16,13 +16,6 @@ public class AssignStat extends Stat{
 
     pw.print(ident + " = ");
 
-//    if(expr.getType() == Type.stringType) {
-//      pw.print("\"");
-//    }
-//    pw.println(expr.getClass());
-//    if(expr.getClass() == CompositeExpr.class) {
-//    	
-//    }
     expr.genC(pw);
     if(expr.getType() == Type.stringType) {
       pw.print("\"");
