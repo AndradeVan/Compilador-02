@@ -1,11 +1,5 @@
 package main;
 
-/*TODO
-
-  - Falta verificar aspas em string e plus plus
- */
-
-
 import ast.Program;
 
 import java.io.*;
@@ -14,16 +8,6 @@ import java.util.Map;
 
 public class Main {
   public static void main(String []args){
-   char []input = ("var Int num; \r\n"
-           + "var String str;"
-           + "var String teste;"
-           + "teste = true ++ \" oi \" ++ false ++ 1;"
-           + "num = 2;"
-           + "str = \"teste\";"
-           + "if 0 > 1 && ((true >= false && \"abc\" < \"cba\") && \"A\" == \"A\") {"
-           + " println \"Ufa, deu certo!\";"
-           + "}\r\n"
-           +"\r\n").toCharArray();
     /*char []input = (" var Int n;"
             + "n = 100;\r\n"
             + "var Int soma; \r\n"
@@ -82,7 +66,7 @@ public class Main {
             + " println \"Ufa, deu certo!\";"
             + "}\r\n"
 
-            ).toCharArray();*/
+            ).toCharArray();
 
     Compiler compiler = new Compiler();
     Program program = compiler.compile(input);
@@ -93,6 +77,43 @@ public class Main {
 
       program.eval(memory);
 
+
+  }*/
+
+    File file;
+    FileReader stream;
+
+    file = new File(args[1]);
+    if ( ! file.exists() || ! file.canRead() ) {
+      System.out.println("Arquivo " + args[1] + " n?o existe ou n?o pode ser lido");
+      return ;
+    }
+    try {
+      stream = new FileReader(file);
+    } catch ( FileNotFoundException e ) {
+      System.out.println("Erro: arquivo n?o existe mais");
+      throw new RuntimeException();
+    }
+    char []input = new char[ (int ) file.length() + 1 ];
+
+    try {
+      stream.read( input, 0, (int ) file.length() );
+    } catch ( IOException e ) {
+      System.out.println("Erro ao ler o arquivo " + args[1]);
+      return ;
+    }
+
+    Compiler compiler = new Compiler();
+    Program program = compiler.compile(input);
+
+    Map<String, Object> memory = new HashMap<>();
+
+    if(args[0].equals("-gen")){
+      program.genC(new PrintWriter(System.out));
+
+    }else if(args[0].equals("-run")){
+      program.eval(memory);
+    }
 
   }
 
