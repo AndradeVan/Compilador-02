@@ -116,7 +116,7 @@ public class PrintlnStat extends Stat{
 			}else {
 				System.out.print(stat.eval(memory));
 			}
-			System.out.print(" ");
+			//System.out.print(" ");
 		}
 		System.out.println("");
   }

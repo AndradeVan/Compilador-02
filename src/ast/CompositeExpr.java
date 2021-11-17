@@ -43,7 +43,6 @@ public class CompositeExpr extends Expr{
    return Type.stringType;
   }
 
-  //Utilizando s� para verificar operadores com string
   @Override
   public Type getTypetoString() {
     return Type.stringType;
@@ -54,7 +53,7 @@ public class CompositeExpr extends Expr{
 
 	  if(left.getClass() == CompositeExpr.class) {
 		  left.genC(pw);
-	  } else if(left.getTypetoString() == Type.stringType){
+	  } else if(left.getTypetoString() == Type.stringType && op != Symbol.PLUSPLUS){
 		  pw.print("\"");
 		  left.genC(pw);
 	  } else {
@@ -78,50 +77,41 @@ public class CompositeExpr extends Expr{
           pw.print(" * ");
           break;
         case LT:
-           if(left.getTypetoString() == Type.stringType) {
+           if(left.getType() == Type.stringType) {
              pw.print("\"");
            }
           pw.print(" < ");
-          // if(right.getTypetoString() == Type.stringType) {
-          //   pw.print("\"");
-          // }
+
           break;
         case LE:
-           if(left.getTypetoString() == Type.stringType) {
+           if(left.getType() == Type.stringType) {
              pw.print("\"");
            }
           pw.print(" <= ");
-          // if(right.getTypetoString() == Type.stringType) {
-          //   pw.print("\"");
-          // }
+
           break;
         case GT:
-           if(left.getTypetoString() == Type.stringType) {
+           if(left.getType() == Type.stringType) {
              pw.print("\"");
            }
           pw.print(" > ");
-          // if(right.getTypetoString() == Type.stringType) {
-          //   pw.print("\"");
-          // }
           break;
         case GE:
-           if(left.getTypetoString() == Type.stringType) {
+           if(left.getType() == Type.stringType) {
              pw.print("\"");
            }
           pw.print(" >= ");
-          // if(right.getTypetoString() == Type.stringType) {
-          //   pw.print("\"");
-          // }
+
           break;
         case NEQ:
-           if(left.getTypetoString() == Type.stringType) {
+           if(left.getType() == Type.stringType) {
              pw.print("\"");
            }
           pw.print(" != ");
 
           break;
         case EQ:
-          if(left.getTypetoString() == Type.stringType) {
+          if(left.getType() == Type.stringType) {
             pw.print("\"");
           }
           pw.print(" == ");
@@ -133,12 +123,13 @@ public class CompositeExpr extends Expr{
           break;
         case OR:
           pw.print(" || ");
+
           break;
       }
-//    right.genC(pw);
+
       if(right.getClass() == CompositeExpr.class) {
 		  right.genC(pw);
-	  } else if (right.getTypetoString() == Type.stringType) {
+	  } else if (right.getTypetoString() == Type.stringType && op != Symbol.PLUSPLUS) {
 		  pw.print("\"");
 		  right.genC(pw);
 		  pw.print("\"");

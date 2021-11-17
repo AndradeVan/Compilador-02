@@ -1,31 +1,5 @@
 package main;
 
-/*TODO
-
-  - Criar eval
-
-  - Ajustar o GenC
-
-  - Eval
-    - for ok
-    - if ok
-    - while ok
-    - println
-    - composite
-      - int ok
-      - boolean ok
-        - Operadores > < >= <= == != and e or
-        - Quais foram: > < >= <= == !=
-      - String ok
-        - Operadores > < >= <= == e !=
-        - Quais foram: > < == e != >= <=
-    - unary
-      - Operadores + - e !
-      - Quais foram: !
-    - varListStat
- */
-
-
 import ast.Program;
 
 import java.io.*;
@@ -34,24 +8,7 @@ import java.util.Map;
 
 public class Main {
   public static void main(String []args){
-    /*char []input = ("var Int n; \r\n"
-                    // + "var String a; \r\n"
-                    + "var Int valor; \r\n"
-                    + "valor = 2;"
-                    // + "var Boolean i; \r\n"
-                    // + "var Int soma; \r\n"
-                    //+ "n = 171700; \r\n"
-                    // + "a = \"testeAAAAAA\" ++ 1 ++ false; \r\n"
-                    // + "if n > 0 && \"abc\" > \"cda\" {"
-                    + "n = (--valor) + 2;\r\n"
-                    // + "println \"teste\"; \r\n"
-                    // + "}\r\n"
-                    // + "if 0 < 1 && ((true >= false && \"abc\" < \"cba\") && \"A\" == \"A\") { \r\n"
-                    // + "println \"Ufa, deu certo!\";"
-                    //+ "if n == valor {"
-                    + "println n;"
-                    +"\r\n").toCharArray();*/
-    char []input = (" var Int n;"
+    /*char []input = (" var Int n;"
             + "n = 100;\r\n"
             + "var Int soma; \r\n"
             + "soma = 0; \r\n"
@@ -80,7 +37,7 @@ public class Main {
             + "   somaFor = somaFor + quad;"
             + " }"
             + "}\r\n"
-            + "println \"soma = \" ++ soma;"
+            + "println \"soma =\" ++ \" \" ++ soma;"
             + "println \"somaFor = \" ++ somaFor;"
             + "var Int num;"
             + "var String str;"
@@ -88,7 +45,7 @@ public class Main {
             + "if soma == somaFor {"
             + " num = 0;"
             + " if num > 0 {"
-            + "   str = \"sou String\";"
+            + "   str = 2 ++ \"sou String\" ++ 2;"
             + "   for cont in 1..5 {"
             + "     souVerd = true;"
             + "     println \"O valor dessa porra = \" ++ (souVerd ++ \" \") ++ cont;"
@@ -111,7 +68,6 @@ public class Main {
 
             ).toCharArray();
 
-
     Compiler compiler = new Compiler();
     Program program = compiler.compile(input);
 
@@ -121,6 +77,43 @@ public class Main {
 
       program.eval(memory);
 
+
+  }*/
+
+    File file;
+    FileReader stream;
+
+    file = new File(args[1]);
+    if ( ! file.exists() || ! file.canRead() ) {
+      System.out.println("Arquivo " + args[1] + " n?o existe ou n?o pode ser lido");
+      return ;
+    }
+    try {
+      stream = new FileReader(file);
+    } catch ( FileNotFoundException e ) {
+      System.out.println("Erro: arquivo n?o existe mais");
+      throw new RuntimeException();
+    }
+    char []input = new char[ (int ) file.length() + 1 ];
+
+    try {
+      stream.read( input, 0, (int ) file.length() );
+    } catch ( IOException e ) {
+      System.out.println("Erro ao ler o arquivo " + args[1]);
+      return ;
+    }
+
+    Compiler compiler = new Compiler();
+    Program program = compiler.compile(input);
+
+    Map<String, Object> memory = new HashMap<>();
+
+    if(args[0].equals("-gen")){
+      program.genC(new PrintWriter(System.out));
+
+    }else if(args[0].equals("-run")){
+      program.eval(memory);
+    }
 
   }
 
